@@ -1,0 +1,16 @@
+{
+  "name": "hapi_nodebr",
+  "version": "0.0.0",
+  "description": "My first project with hapi",
+  "main": "index.js",
+  "type": "commonjs",
+  "author": "Raul Silva Araujo",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.9",
+    "joi": "^17.13.0"
+  }
+}
