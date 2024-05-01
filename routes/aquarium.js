@@ -1,13 +1,14 @@
-const { createSchema } = require('../schemas/aquarium')
-const { createAquarium } = require('../controllers/aquarium')
+const { createSchema, getAllSchema, getOneSchema } = require('../schemas/aquarium')
+const { createAquarium, findAllAquarium, findOneAquarium } = require('../controllers/aquarium')
 
 
 const router = [
   {
     method: "GET",
     path: "/aquarium",
-    handler: (req, h) => {
-      return "Aquarium router";
+    options: {
+      handler: findAllAquarium,
+      validate: getAllSchema
     }
   },
   {
@@ -21,8 +22,9 @@ const router = [
   {
     method: "GET",
     path: "/aquarium/{id}",
-    handler: (req, h) => {
-      return "Aquarium router";
+    options: {
+      handler: findOneAquarium,
+      validate: getOneSchema
     }
   },
   {
