@@ -51,6 +51,14 @@ const createSchema = {
 
 const getAllSchema = {
     query: Joi.object({
+        page: Joi
+            .number()
+            .integer()
+            .default(0),
+        itemsPerPage: Joi
+            .number()
+            .integer()
+            .default(10),
         name: Joi
             .string(),
         format_aquarium: Joi
@@ -83,7 +91,9 @@ const getAllSchema = {
 
 const getOneSchema = {
     params: Joi.object({
-        id: Joi.objectId()
+        id: Joi
+            .objectId()
+            .required()
     }),
     query: Joi.object({
         name: Joi
@@ -116,11 +126,10 @@ const getOneSchema = {
     })
 }
 
-const putSchema = {
+const updateSchema = {
     params: Joi.object({
         id: Joi
-            .number()
-            .integer()
+            .objectId()
             .required()
     }),
     query: Joi.object({
@@ -157,8 +166,7 @@ const putSchema = {
 const deleteSchema = {
     params: Joi.object({
         id: Joi
-            .number()
-            .integer()
+            .objectId()
             .required()
     })
 }
@@ -167,6 +175,6 @@ module.exports = {
     createSchema,
     getAllSchema,
     getOneSchema,
-    putSchema,
+    updateSchema,
     deleteSchema
 }

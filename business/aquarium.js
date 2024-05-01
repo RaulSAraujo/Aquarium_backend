@@ -13,8 +13,18 @@ const findOne = async (request) => {
     return repository.findOne(request);
 }
 
+const update = async (request) => {
+    return repository.update(request);
+}
+
+const destroy = async (request) => {
+    return repository.destroy(request);
+}
+
 module.exports = {
     findAll,
     create,
-    findOne
+    findOne,
+    update,
+    destroy
 }

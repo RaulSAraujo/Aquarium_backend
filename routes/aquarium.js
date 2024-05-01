@@ -1,5 +1,5 @@
-const { createSchema, getAllSchema, getOneSchema } = require('../schemas/aquarium')
-const { createAquarium, findAllAquarium, findOneAquarium } = require('../controllers/aquarium')
+const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema } = require('../schemas/aquarium')
+const { createAquarium, findAllAquarium, findOneAquarium, updateAquarium, deleteAquarium } = require('../controllers/aquarium')
 
 
 const router = [
@@ -30,15 +30,17 @@ const router = [
   {
     method: "PUT",
     path: "/aquarium/{id}",
-    handler: (req, h) => {
-      return "Aquarium router";
+    options: {
+      handler: updateAquarium,
+      validate: updateSchema
     }
   },
   {
     method: "DELETE",
     path: "/aquarium/{id}",
-    handler: (req, h) => {
-      return "Aquarium router";
+    options: {
+      handler: deleteAquarium,
+      validate: deleteSchema
     }
   }
 ];
