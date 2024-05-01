@@ -1,22 +1,20 @@
 const business = require('../business/aquarium');
 
-// request.logger.info('In handler %s', request.path)
-
 const findAllAquarium = async (request, h) => {
-  const { query } = request;
-  const result = await business.findAll(query);
+  const result = await business.findAll(request);
+
   return h.response(result).code(200);
 };
 
 const createAquarium = async (request, h) => {
-  const { payload } = request
-  const result = await business.create(payload)
+  const result = await business.create(request)
+
   return h.response(result).code(201);
 };
 
 const findOneAquarium = async (request, h) => {
-  const { id } = request.params
-  const result = await business.findOne(id)
+  const result = await business.findOne(request)
+  
   return h.response(result).code(200);
 }
 

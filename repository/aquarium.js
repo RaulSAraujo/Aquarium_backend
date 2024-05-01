@@ -1,37 +1,34 @@
 // Faz a conexão com o banco
-const aquarium_db = [];
 
-const findAll = async (query) => {
-    const objects = Object.entries(query)
+const findAll = async (request) => {
+    try {
+        const page = Number(request.query.page) || 0;
+        const itemsPerPage = Number(request.query.itemsPerPage) || 10;
 
-    if (objects) {
-        const results = aquarium_db.filter(aquarium => {
-            let match = true;
-
-            for (const key in query) {
-                if (aquarium[key] !== query[key]) {
-                    match = false;
-                    break;
-                }
-            }
-
-            return match;
-        });
-
-        return results
+        const result = await request.mongo.db.collection('aquarium').find({}).sort({ id: -1 }).skip(page).limit(itemsPerPage).toArray();
+        return result;
     }
-
-    return aquarium_db
+    catch (err) {
+        throw request.logger.error(err)
+    }
 }
 
-const create = async (product) => {
-    product.id = Math.floor(Math.random() * 1000);
-    aquarium_db.push(product);
-    return product;
+const create = async (request) => {
+    const payload = request.payload
+    const status = await request.mongo.db.collection('aquarium').insertOne(payload);
+    return status;
 }
 
-const findOne = async (id) => {
-    return aquarium_db.find(p => p.id === id) || {};
+const findOne = async (request) => {
+    const id = request.params.id
+    const ObjectID = request.mongo.ObjectID;
+    const aquarium = await request.mongo.db.collection('aquarium').findOne(
+        {
+            _id: new ObjectID(id)
+        }
+    );
+
+    return aquarium
 }
 
 module.exports = {

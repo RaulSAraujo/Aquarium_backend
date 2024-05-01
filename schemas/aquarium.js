@@ -1,4 +1,5 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 
 const createSchema = {
     payload: Joi.object({
@@ -44,7 +45,7 @@ const createSchema = {
             .required(),
         created: Joi
             .date()
-            .default(Date.now()),
+            .default(new Date().toISOString()),
     })
 }
 
@@ -82,10 +83,7 @@ const getAllSchema = {
 
 const getOneSchema = {
     params: Joi.object({
-        id: Joi
-            .number()
-            .integer()
-            .required()
+        id: Joi.objectId()
     }),
     query: Joi.object({
         name: Joi

@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.9",
+    "hapi-mongodb": "^11.0.0",
     "hapi-pino": "^12.1.0",
     "joi": "^17.13.0",
+    "joi-objectid": "^4.0.2",
     "pino-pretty": "^11.0.0"
   }
 }

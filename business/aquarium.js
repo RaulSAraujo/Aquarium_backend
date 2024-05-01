@@ -1,16 +1,16 @@
 const repository = require('../repository/aquarium')
 //logica negocio
 
-const findAll = async (query) => {
-    return repository.findAll(query);
+const findAll = async (request) => {
+    return repository.findAll(request);
 }
 
-const create = async (product) => {
-    return repository.create(product);
+const create = async (request) => {
+    return repository.create(request);
 }
 
-const findOne = async (id) => {
-    return repository.findOne(id);
+const findOne = async (request) => {
+    return repository.findOne(request);
 }
 
 module.exports = {
