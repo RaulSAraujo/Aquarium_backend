@@ -1,5 +1,5 @@
-const Joi = require('joi')
-Joi.objectId = require('joi-objectid')(Joi)
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const createSchema = {
     params: Joi.object({
@@ -8,16 +8,19 @@ const createSchema = {
             .required()
     }),
     payload: Joi.object({
-        species: Joi
+        name: Joi
             .string()
-            .valid('fish', 'turtle', 'snake')
+            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light')
             .required(),
         quantity: Joi
             .number()
             .integer()
-            .required()
+            .required(),
+        created: Joi
+            .date()
+            .default(() => new Date().toISOString('America/Sao_Paulo'))
     })
-}
+};
 
 const getAllSchema = {
     params: Joi.object({
@@ -26,14 +29,14 @@ const getAllSchema = {
             .required()
     }),
     query: Joi.object({
-        species: Joi
+        name: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
         quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const getOneSchema = {
     params: Joi.object({
@@ -45,14 +48,14 @@ const getOneSchema = {
             .required()
     }),
     query: Joi.object({
-        species: Joi
+        name: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
         quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const updateSchema = {
     params: Joi.object({
@@ -64,14 +67,14 @@ const updateSchema = {
             .required()
     }),
     payload: Joi.object({
-        species: Joi
+        name: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
         quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const deleteSchema = {
     params: Joi.object({
@@ -82,7 +85,7 @@ const deleteSchema = {
             .objectId()
             .required()
     })
-}
+};
 
 module.exports = {
     createSchema,
@@ -90,4 +93,4 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema
-}
+};

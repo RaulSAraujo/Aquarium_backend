@@ -1,5 +1,5 @@
-const Joi = require('joi')
-Joi.objectId = require('joi-objectid')(Joi)
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const createSchema = {
     payload: Joi.object({
@@ -18,9 +18,12 @@ const createSchema = {
         email: Joi
             .string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-            .required()
+            .required(),
+        created: Joi
+            .date()
+            .default(() => new Date().toISOString('America/Sao_Paulo'))
     })
-}
+};
 
 const getAllSchema = {
     query: Joi.object({
@@ -32,7 +35,7 @@ const getAllSchema = {
             .string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     })
-}
+};
 
 const getOneSchema = {
     params: Joi.object({
@@ -49,7 +52,7 @@ const getOneSchema = {
             .string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     })
-}
+};
 
 const updateSchema = {
     params: Joi.object({
@@ -71,7 +74,7 @@ const updateSchema = {
             .string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     })
-}
+};
 
 const deleteSchema = {
     params: Joi.object({
@@ -79,7 +82,7 @@ const deleteSchema = {
             .objectId()
             .required()
     })
-}
+};
 
 module.exports = {
     createSchema,
@@ -87,4 +90,4 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema
-}
+};

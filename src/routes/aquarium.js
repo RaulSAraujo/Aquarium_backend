@@ -1,5 +1,5 @@
-const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema } = require('../schemas/aquarium')
-const { createAquarium, findAllAquarium, findOneAquarium, updateAquarium, deleteAquarium } = require('../controllers/aquarium')
+const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema } = require('../schemas/aquarium');
+const { createAquarium, findAllAquarium, findOneAquarium, updateAquarium, deleteAquarium } = require('../controllers/aquarium');
 
 
 const router = [

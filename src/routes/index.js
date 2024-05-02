@@ -4,4 +4,4 @@ const sensorRouter = require('./sensor');
 const aquariumRouter = require('./aquarium');
 const accessoryRouter = require('./accessory');
 
-module.exports = [aquariumRouter, userRouter, petRouter, sensorRouter, accessoryRouter]
+module.exports = [aquariumRouter, userRouter, petRouter, sensorRouter, accessoryRouter];

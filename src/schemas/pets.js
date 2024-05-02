@@ -1,5 +1,5 @@
-const Joi = require('joi')
-Joi.objectId = require('joi-objectid')(Joi)
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const createSchema = {
     params: Joi.object({
@@ -8,19 +8,19 @@ const createSchema = {
             .required()
     }),
     payload: Joi.object({
-        name: Joi
+        species: Joi
             .string()
+            .valid('fish', 'turtle', 'snake')
             .required(),
-        metric: Joi
-            .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity')
-            .required(),
-        value: Joi
+        quantity: Joi
             .number()
             .integer()
-            .required()
+            .required(),
+        created: Joi
+            .date()
+            .default(() => new Date().toISOString('America/Sao_Paulo'))
     })
-}
+};
 
 const getAllSchema = {
     params: Joi.object({
@@ -29,16 +29,14 @@ const getAllSchema = {
             .required()
     }),
     query: Joi.object({
-        name: Joi
-            .string(),
-        metric: Joi
+        species: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
-        value: Joi
+            .valid('fish', 'turtle', 'snake'),
+        quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const getOneSchema = {
     params: Joi.object({
@@ -50,16 +48,14 @@ const getOneSchema = {
             .required()
     }),
     query: Joi.object({
-        name: Joi
-            .string(),
-        metric: Joi
+        species: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
-        value: Joi
+            .valid('fish', 'turtle', 'snake'),
+        quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const updateSchema = {
     params: Joi.object({
@@ -71,16 +67,14 @@ const updateSchema = {
             .required()
     }),
     payload: Joi.object({
-        name: Joi
-            .string(),
-        metric: Joi
+        species: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
-        value: Joi
+            .valid('fish', 'turtle', 'snake'),
+        quantity: Joi
             .number()
             .integer()
     })
-}
+};
 
 const deleteSchema = {
     params: Joi.object({
@@ -91,7 +85,7 @@ const deleteSchema = {
             .objectId()
             .required()
     })
-}
+};
 
 module.exports = {
     createSchema,
@@ -99,4 +93,4 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema
-}
+};

@@ -24,7 +24,7 @@ const server = require("./server");
         }
       }
     }
-  })
+  });
 
   await server.register({
     plugin: require('hapi-mongodb'),
@@ -35,5 +35,5 @@ const server = require("./server");
   });
 
   await server.start();
-  server.logger.info(`Server listening: ${server.info.uri}`)
-})()
+  server.logger.info(`Server listening: ${server.info.uri}`);
+})();

@@ -1,5 +1,5 @@
 const Hapi = require("@hapi/hapi");
-const router = require("./routes");
+const router = require("./src/routes");
 
 const server = Hapi.server({
   port: 4000,

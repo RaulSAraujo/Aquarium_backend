@@ -1,5 +1,5 @@
-const Joi = require('joi')
-Joi.objectId = require('joi-objectid')(Joi)
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const createSchema = {
     params: Joi.object({
@@ -10,14 +10,20 @@ const createSchema = {
     payload: Joi.object({
         name: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light')
             .required(),
-        quantity: Joi
+        metric: Joi
+            .string()
+            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity')
+            .required(),
+        value: Joi
             .number()
             .integer()
-            .required()
+            .required(),
+        created: Joi
+            .date()
+            .default(() => new Date().toISOString('America/Sao_Paulo'))
     })
-}
+};
 
 const getAllSchema = {
     params: Joi.object({
@@ -27,13 +33,15 @@ const getAllSchema = {
     }),
     query: Joi.object({
         name: Joi
+            .string(),
+        metric: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
+            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+        value: Joi
             .number()
             .integer()
     })
-}
+};
 
 const getOneSchema = {
     params: Joi.object({
@@ -46,13 +54,15 @@ const getOneSchema = {
     }),
     query: Joi.object({
         name: Joi
+            .string(),
+        metric: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
+            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+        value: Joi
             .number()
             .integer()
     })
-}
+};
 
 const updateSchema = {
     params: Joi.object({
@@ -65,13 +75,15 @@ const updateSchema = {
     }),
     payload: Joi.object({
         name: Joi
+            .string(),
+        metric: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
+            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+        value: Joi
             .number()
             .integer()
     })
-}
+};
 
 const deleteSchema = {
     params: Joi.object({
@@ -82,7 +94,7 @@ const deleteSchema = {
             .objectId()
             .required()
     })
-}
+};
 
 module.exports = {
     createSchema,
@@ -90,4 +102,4 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema
-}
+};

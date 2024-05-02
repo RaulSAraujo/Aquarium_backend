@@ -1,5 +1,5 @@
-const Joi = require('joi')
-Joi.objectId = require('joi-objectid')(Joi)
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const createSchema = {
     payload: Joi.object({
@@ -45,9 +45,13 @@ const createSchema = {
             .required(),
         created: Joi
             .date()
-            .default(new Date().toISOString()),
+            .default(() => new Date().toISOString('America/Sao_Paulo')),
+        acessories_id: Joi
+            .array()
+            .items(Joi.objectId())
+            .default([])
     })
-}
+};
 
 const getAllSchema = {
     query: Joi.object({
@@ -87,7 +91,7 @@ const getAllSchema = {
             .string()
             .valid('110', '220')
     })
-}
+};
 
 const getOneSchema = {
     params: Joi.object({
@@ -124,7 +128,7 @@ const getOneSchema = {
             .string()
             .valid('110', '220')
     })
-}
+};
 
 const updateSchema = {
     params: Joi.object({
@@ -163,7 +167,7 @@ const updateSchema = {
             .string()
             .valid('110', '220')
     })
-}
+};
 
 const deleteSchema = {
     params: Joi.object({
@@ -171,7 +175,7 @@ const deleteSchema = {
             .objectId()
             .required()
     })
-}
+};
 
 module.exports = {
     createSchema,
@@ -179,4 +183,4 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema
-}
+};
