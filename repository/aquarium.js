@@ -4,7 +4,8 @@ const findAll = async (request) => {
     try {
         const { page, itemsPerPage } = request.query
         const result = await request.mongo.db.collection('aquarium').find({}).skip((page - 1) * itemsPerPage).limit(itemsPerPage).toArray();
-        return result;
+        const count = await request.mongo.db.collection('aquarium').countDocuments();
+        return { result, count, page, itemsPerPage };
     } catch (err) {
         throw request.logger.error(err)
     }
@@ -14,7 +15,7 @@ const create = async (request) => {
     try {
         const payload = request.payload
         const status = await request.mongo.db.collection('aquarium').insertOne(payload);
-        return status;
+        return { _id: status.insertedId, ...payload };
     } catch (err) {
         throw request.logger.error(err)
     }
@@ -36,8 +37,9 @@ const update = async (request) => {
         const id = request.params.id
         const ObjectID = request.mongo.ObjectID;
         const payload = request.payload
-        const aquarium = await request.mongo.db.collection('aquarium').updateOne({_id: new ObjectID(id)}, {$set: payload});
-        return aquarium
+        const aquarium = await request.mongo.db.collection('aquarium').updateOne({ _id: new ObjectID(id) }, { $set: payload });
+        
+        return { aquarium, payload }
     } catch (err) {
         throw request.logger.error(err)
     }
@@ -47,8 +49,8 @@ const destroy = async (request) => {
     try {
         const id = request.params.id
         const ObjectID = request.mongo.ObjectID;
-        const status = await request.mongo.db.collection('aquarium').deleteOne({_id: new ObjectID(id)});
-        return status;
+        const status = await request.mongo.db.collection('aquarium').deleteOne({ _id: new ObjectID(id) });
+        return { status, id };
     } catch (err) {
         throw request.logger.error(err)
     }

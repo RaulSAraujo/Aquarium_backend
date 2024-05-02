@@ -54,7 +54,7 @@ const getAllSchema = {
         page: Joi
             .number()
             .integer()
-            .default(0),
+            .default(1),
         itemsPerPage: Joi
             .number()
             .integer()
@@ -132,8 +132,10 @@ const updateSchema = {
             .objectId()
             .required()
     }),
-    query: Joi.object({
+    payload: Joi.object({
         name: Joi
+            .string(),
+        icon: Joi
             .string(),
         format_aquarium: Joi
             .string()
