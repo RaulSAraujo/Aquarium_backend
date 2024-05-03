@@ -18,13 +18,14 @@ const findAllAccessory = async (request, h) => {
 
 const createAccessory = async (request, h) => {
   const { params, payload, mongo } = request;
-  const result = await business.create(params.aquarium_id, payload, mongo);
+  const { message, code, result } = await business.create(params.aquarium_id, payload, mongo);
+
   const body = {
-    message: "Acessorio criado com sucesso.",
+    message: message,
     data: result
   }
 
-  return h.response(body).code(201);
+  return h.response(body).code(code);
 };
 
 const findOneAccessory = async (request, h) => {
