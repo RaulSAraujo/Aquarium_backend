@@ -26,14 +26,6 @@ const server = require("./server");
     }
   });
 
-  await server.register({
-    plugin: require('hapi-mongodb'),
-    options: {
-      url: 'mongodb+srv://admin:admin@cluster0.qhvbuvx.mongodb.net/aquarium_db',
-      decorate: true
-    }
-  });
-
   await server.start();
   server.logger.info(`Server listening: ${server.info.uri}`);
 })();

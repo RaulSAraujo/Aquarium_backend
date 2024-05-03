@@ -1,58 +1,118 @@
-// Faz a conexão com o banco
+const prisma = require('../../prisma/index')
 
-const findAll = async (page, itemsPerPage, mongo) => {
+/**
+ * @description Busca todos os acessórios vinculados ao acessórios.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {object} query - Parâmetros de busca.
+ * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {object} Lista de acessórios com a contagem total de acessórios.
+ */
+const findAll = async (aquariumId, query, logger) => {
     try {
-        const { db } = mongo;
-        const result = await db.collection('accessories').find({}).skip((page - 1) * itemsPerPage).limit(itemsPerPage).toArray();
-        const count = await db.collection('accessories').countDocuments();
+        const result = await prisma.accessory.findMany({
+            where: {
+                aquariumId,
+                ...query
+            },
+            select: {
+                id: true,
+                name: true,
+                quantity: true,
+                created_at: true,
+                updated_at: true,
+            },
+        })
+        const count = await prisma.accessory.count()
 
         return { result, count };
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const create = async (payload, mongo) => {
+/**
+ * @description Criação de um novo acessório.
+ * @param {object} payload - Parâmetros de criação de um novo acessórios.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do acessórios criado.
+ */
+const create = async (payload, logger) => {
     try {
-        const { db } = mongo;
-        const status = await db.collection('accessories').insertOne(payload);
+        const result = await prisma.accessory.create({
+            data: payload
+        })
 
-        return { _id: status.insertedId, ...payload };
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const findOne = async (request) => {
+/**
+ * @description Busca apenas um acessórios.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} id - Id do acessório.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do acessórios.
+ */
+const findOne = async (aquariumId, id, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const aquarium = await db.collection('accessories').findOne({ _id: new ObjectID(id) });
+        const result = await prisma.accessory.findUnique({
+            where: {
+                aquariumId,
+                id
+            }
+        })
 
-        return aquarium;
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const update = async (request) => {
+/**
+ * @description Atualiza os dados do acessórios.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} id - Id do acessórios
+ * @param {object} payload - Parâmetros de atualização do acessórios.
+ * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {object} Dados do acessórios atualizado.
+ */
+const update = async (aquariumId, id, payload, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const aquarium = await db.collection('accessories').updateOne({ _id: new ObjectID(id) }, { $set: payload });
+        const result = await prisma.accessory.update({
+            where: {
+                aquariumId,
+                id
+            },
+            data: payload
+        })
 
-        return aquarium;
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const destroy = async (request) => {
+/**
+ * @description Deleta um acessórios.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} id - Id do acessórios.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do acessórios deletado.
+ */
+const destroy = async (aquariumId, id, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const status = await db.collection('accessories').deleteOne({ _id: new ObjectID(id) });
+        const result = await prisma.accessory.delete({
+            where: {
+                aquariumId,
+                id
+            }
+        })
 
-        return status
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 

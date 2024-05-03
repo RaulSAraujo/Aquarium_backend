@@ -1,62 +1,103 @@
 const business = require('../business/aquarium');
 
+/**
+ * @description Busca todos os aquários.
+ * @param {*} request 
+ * @param {*} h
+ * @property {number} page - Pagina atual.
+ * @default 1
+ * @property {number} itemsPerPage - Quatidade de itens exibidos na pagina.
+ * @default 10
+ * @property {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {void}
+ */
 const findAllAquarium = async (request, h) => {
   const { page, itemsPerPage } = request.query;
-  const { result, count } = await business.findAll(page, itemsPerPage, request.mongo);
+  delete request.query.page
+  delete request.query.itemsPerPage
+
+  const { code, result, count } = await business.findAll(page, itemsPerPage, request.query, request.logger);
   const body = {
     paging: {
       total: count,
       page: page,
-      itemsPerPage: itemsPerPage
+      current: result.length,
+      itemsPerPage: itemsPerPage < 50 ? itemsPerPage : 50,
+      maxItemsPerPage: 50
     },
     data: result
   };
 
-  return h.response(body).code(200);
+  return h.response(body).code(code);
 };
 
+/**
+ * @description Criação de um novo aquário
+ * @param {*} request 
+ * @param {*} h 
+ * @returns {void}
+ */
 const createAquarium = async (request, h) => {
-  const { payload, mongo } = request;
-  const result = await business.create(payload, mongo);
+  const { message, code, result } = await business.create(request.payload, request.logger);
+
   const body = {
-    message: "Aquarium criado com sucesso.",
+    message,
     data: result
   };
 
-  return h.response(body).code(201);
+  return h.response(body).code(code);
 };
 
+/**
+ * @description Busca apenas um aquário.
+ * @param {*} request 
+ * @param {*} h 
+ * @returns {void}
+ */
 const findOneAquarium = async (request, h) => {
-  const { params, mongo } = request;
-  const result = await business.findOne(params.id, mongo);
+  const { message, code, result } = await business.findOne(request.params.id, request.logger);
 
-  return h.response(
-    result
-      ? { data: result }
-      : { message: "Aquário não encontrado" }
-  ).code(result > 0 ? 200 : 404);
+  const body = {
+    message,
+    data: result
+  };
+
+  return h.response(body).code(code);
 };
 
+/**
+ * @description Atualiza os dados do aquário.
+ * @param {*} request 
+ * @param {*} h 
+ * @returns {void}
+ */
 const updateAquarium = async (request, h) => {
-  const { payload, mongo, params } = request;
-  const aquarium = await business.update(params.id, payload, mongo);
+  const { payload, params } = request;
+  const { message, code, result } = await business.update(params.id, payload, request.logger);
 
-  return h.response(
-    aquarium.matchedCount > 0
-      ? { message: "Aquário atualizado com sucesso.", data: { payload, modifiedCount: aquarium.modifiedCount } }
-      : { message: "Aquário não encontrado" }
-  ).code(aquarium.matchedCount > 0 ? 200 : 404);
+  const body = {
+    message,
+    data: result
+  };
+
+  return h.response(body).code(code);
 };
 
+/**
+ * @description Deleta um aquário.
+ * @param {*} request 
+ * @param {*} h 
+ * @returns {void}
+ */
 const deleteAquarium = async (request, h) => {
-  const { params, mongo } = request;
-  const status = await business.destroy(params.id, mongo);
+  const { message, code, result } = await business.destroy(request.params.id, request.logger);
 
-  return h.response(
-    status.deletedCount > 0
-      ? { message: "Aquário deletado com sucesso.", id: params.id, deletedCount: status.deletedCount }
-      : { message: "Aquário não encontrado" }
-  ).code(status.deletedCount > 0 ? 200 : 404);
+  const body = {
+    message,
+    data: result
+  };
+
+  return h.response(body).code(code);
 };
 
 module.exports = {

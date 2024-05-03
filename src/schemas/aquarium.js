@@ -42,14 +42,7 @@ const createSchema = {
         voltage: Joi
             .string()
             .valid('110', '220')
-            .required(),
-        created: Joi
-            .date()
-            .default(() => new Date().toISOString('America/Sao_Paulo')),
-        acessories_id: Joi
-            .array()
-            .items(Joi.objectId())
-            .default([])
+            .required()
     })
 };
 

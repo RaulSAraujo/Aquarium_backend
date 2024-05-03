@@ -1,57 +1,122 @@
-// Faz a conexão com o banco
+const prisma = require('../../prisma/index')
 
-const findAll = async (page, itemsPerPage, mongo) => {
+/**
+ * @description Busca todos os aquários.
+ * @param {number} page - Pagina atual.
+ * @param {number} itemsPerPage - Quatidade de itens exibidos na pagina.
+ * @param {object} query - Parâmetros de busca.
+ * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {object} Lista de aquários com a contagem total de aquários.
+ */
+const findAll = async (page, itemsPerPage, query, logger) => {
     try {
-        const { db } = mongo;
-        const result = await db.collection('aquarium').find({}).skip((page - 1) * itemsPerPage).limit(itemsPerPage).toArray();
-        const count = await db.collection('aquarium').countDocuments();
+        const result = await prisma.aquarium.findMany({
+            where: {
+                ...query
+            },
+            select: {
+                id: true,
+                name: true,
+                icon: true,
+                format_aquarium: true,
+                material: true,
+                thickness: true,
+                capacity: true,
+                height: true,
+                width: true,
+                depth: true,
+                voltage: true,
+                created_at: true,
+                updated_at: true
+            },
+            skip: (page - 1) * itemsPerPage,
+            take: itemsPerPage
+        })
+        const count = await prisma.aquarium.count()
 
         return { result, count };
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const create = async (payload, mongo) => {
+/**
+ * @description Criação de um novo aquário.
+ * @param {object} payload - Parâmetros de criação de um novo aquário.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do aquário criado.
+ */
+const create = async (payload, logger) => {
     try {
-        const { db } = mongo;
-        const status = await db.collection('aquarium').insertOne(payload);
+        const result = await prisma.aquarium.create({
+            data: payload
+        })
 
-        return { _id: status.insertedId, ...payload };
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const findOne = async (id, mongo) => {
+/**
+ * @description Busca apenas um aquário.
+ * @param {number} id - Id do aquário.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do aquário.
+ */
+const findOne = async (id, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const aquarium = await db.collection('aquarium').findOne({ _id: new ObjectID(id) });
-        return aquarium;
+        const result = await prisma.aquarium.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const update = async (id, payload, mongo) => {
+/**
+ * @description Atualiza os dados do aquário.
+ * @param {number} id - Id do aquário
+ * @param {object} payload - Parâmetros de atualização do aquário.
+ * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {object} Dados do aquário atualizado.
+ */
+const update = async (id, payload, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const aquarium = await db.collection('aquarium').updateOne({ _id: new ObjectID(id) }, { $set: payload });
+        const result = await prisma.aquarium.update({
+            where: {
+                id,
+            },
+            data: payload
+        })
 
-        return aquarium;
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 
-const destroy = async (id, mongo) => {
+/**
+ * @description Deleta um aquário.
+ * @param {number} id - Id do aquário.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do aquário deletado.
+ */
+const destroy = async (id, logger) => {
     try {
-        const { ObjectID, db } = mongo;
-        const status = await db.collection('aquarium').deleteOne({ _id: new ObjectID(id) });
-        
-        return status
+        const result = await prisma.aquarium.delete({
+            where: {
+                id
+            }
+        })
+
+        return result;
     } catch (err) {
-        throw request.logger.error(err);
+        throw logger.error(err);
     }
 };
 

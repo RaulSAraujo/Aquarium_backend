@@ -18,10 +18,7 @@ const createSchema = {
         email: Joi
             .string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-            .required(),
-        created: Joi
-            .date()
-            .default(() => new Date().toISOString('America/Sao_Paulo'))
+            .required()
     })
 };
 

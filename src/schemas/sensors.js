@@ -18,10 +18,7 @@ const createSchema = {
         value: Joi
             .number()
             .integer()
-            .required(),
-        created: Joi
-            .date()
-            .default(() => new Date().toISOString('America/Sao_Paulo'))
+            .required()
     })
 };
 
