@@ -1,39 +1,6 @@
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
-const createSchema = {
-    payload: Joi.object({
-        username: Joi
-            .string()
-            .min(3)
-            .max(30)
-            .required(),
-        password: Joi
-            .string()
-            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-            .required(),
-        repeat_password: Joi
-            .ref('password')
-            .required(),
-        email: Joi
-            .string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-            .required()
-    })
-};
-
-const getAllSchema = {
-    query: Joi.object({
-        username: Joi
-            .string()
-            .min(3)
-            .max(30),
-        email: Joi
-            .string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    })
-};
-
 const getOneSchema = {
     params: Joi.object({
         id: Joi
@@ -43,7 +10,7 @@ const getOneSchema = {
     query: Joi.object({
         username: Joi
             .string()
-            .min(3)
+            .min(8)
             .max(30),
         email: Joi
             .string()
@@ -73,18 +40,7 @@ const updateSchema = {
     })
 };
 
-const deleteSchema = {
-    params: Joi.object({
-        id: Joi
-            .objectId()
-            .required()
-    })
-};
-
 module.exports = {
-    createSchema,
-    getAllSchema,
     getOneSchema,
-    updateSchema,
-    deleteSchema
+    updateSchema
 };

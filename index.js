@@ -1,4 +1,15 @@
 const server = require("./server");
+const User = require("./src/repository/user")
+
+const validate = async (decoded, request, h) => {
+  let user = await User.findOne(decoded.id, request.logger);
+  if (user) {
+    request.user = user;
+    return { isValid: true };
+  } else {
+    return { isValid: false };
+  }
+};
 
 (async () => {
   await server.register({
@@ -25,6 +36,12 @@ const server = require("./server");
       }
     }
   });
+
+  await server.register(require('hapi-auth-jwt2'));
+
+  server.auth.strategy('jwt', 'jwt', { key: process.env.JWT_SECRET, validate });
+
+  server.auth.default('jwt');
 
   await server.start();
   server.logger.info(`Server listening: ${server.info.uri}`);
