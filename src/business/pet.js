@@ -1,4 +1,4 @@
-const repository = require('../repository/accessory');
+const repository = require('../repository/pet');
 const aquariumRepository = require('../repository/aquarium');
 
 /**
@@ -6,7 +6,7 @@ const aquariumRepository = require('../repository/aquarium');
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
  * @callback repository.findAll Realiza a consulta no banco de dados.
- * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
+ * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
 const findAll = async (aquariumId, query, logger) => {
     const result = await repository.findAll(aquariumId, query, logger);
@@ -18,7 +18,7 @@ const findAll = async (aquariumId, query, logger) => {
  * @param {string} aquariumId - Id do aquário.
  * @param {object} payload - Parâmetros de criação.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @callback repository.create Realiza a criação do acessórios no banco de dados
+ * @callback repository.create Realiza a criação do sensores no banco de dados
  * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
  */
 const create = async (aquariumId, payload, logger) => {
@@ -28,14 +28,14 @@ const create = async (aquariumId, payload, logger) => {
 
     const result = await repository.create({ aquariumId, ...payload }, logger);
 
-    return { message: 'Acessório criado com sucesso.', code: 201, result };
+    return { message: 'Pet cadastrado com sucesso.', code: 201, result };
 };
 
 /**
  * @param {string} aquariumId - Id do aquário.
- * @param {string} id - Id do acessório.
+ * @param {string} id - Id do pet.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @callback repository.findOne Realiza a busca do acessório de acordo com o aquariumId e o id.
+ * @callback repository.findOne Realiza a busca do sensor de acordo com o aquariumId e o id.
  * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
  */
 const findOne = async (aquariumId, id, logger) => {
@@ -45,18 +45,18 @@ const findOne = async (aquariumId, id, logger) => {
 
     const result = await repository.findOne(aquariumId, id, logger);
 
-    if (!result) return { message: "Acessório não encontrado.", code: 404, result: undefined };
+    if (!result) return { message: "Pet não encontrado.", code: 404, result: undefined };
 
     return { message: undefined, code: 200, result };
 };
 
 /**
- * @description Verifica se o aquário e o acessório são validos para atualizar o acessório.
+ * @description Verifica se o aquário e o pet são validos e atualizar o pet.
  * @param {string} aquariumId - Id do aquário.
- * @param {string} id - Id do acessórios.
- * @param {object} payload - Parâmetros para a atualização do acessório.
+ * @param {string} id - Id do pet.
+ * @param {object} payload - Parâmetros para a atualização do pet.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @callback repository.findOne Busca o acessórios pelo id.
+ * @callback repository.findOne Busca o pet pelo id.
  * @throws {Error} Se o id || aquariumId invalido.
  * @returns {object}  message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
  */
@@ -67,19 +67,19 @@ const update = async (aquariumId, id, payload, logger) => {
 
     const accessory = await repository.findOne(aquariumId, id, logger);
 
-    if (!accessory) return { message: "Acessório não encontrado.", code: 404, result: undefined };
+    if (!accessory) return { message: "Pet não encontrado.", code: 404, result: undefined };
 
     const result = await repository.update(aquariumId, id, payload, logger);
 
-    return { message: "Dados do acessório atualizado com sucesso.", code: 200, result };
+    return { message: "Dados do pet atualizado com sucesso.", code: 200, result };
 };
 
 /**
- * @description Verifica se o aquário e o acessório são validos para deletar o acessório.
+ * @description Verifica se o aquário e o pet são validos e deleta o pet.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessório.
+ * @param {number} id - Id do pet.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @callback repository.findOne Busca o acessórios pelo id.
+ * @callback repository.findOne Busca o pet pelo id.
  * @throws {Error} Se o id || aquariumId invalido.
  * @returns {object}  message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
  */
@@ -90,11 +90,11 @@ const destroy = async (aquariumId, id, logger) => {
 
     const accessory = await repository.findOne(aquariumId, id, logger);
 
-    if (!accessory) return { message: "Acessório não encontrado.", code: 404, result: undefined };
+    if (!accessory) return { message: "Pet não encontrado.", code: 404, result: undefined };
 
     const result = await repository.destroy(aquariumId, id, logger);
 
-    return { message: "Acessório deletado com sucesso.", code: 200, result };
+    return { message: "Pet deletado com sucesso.", code: 200, result };
 };
 
 module.exports = {

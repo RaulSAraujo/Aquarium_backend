@@ -56,7 +56,7 @@ const update = async (id, payload, logger) => {
 
     const result = await repository.update(id, payload, logger);
 
-    return { message: "Aquário atualizado com sucesso.", code: 200, result };
+    return { message: "Dados do aquário atualizado com sucesso.", code: 200, result };
 };
 
 /**

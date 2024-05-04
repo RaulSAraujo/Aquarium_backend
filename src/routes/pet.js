@@ -1,39 +1,45 @@
-
+const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema } = require('../schemas/pet');
+const { createPet, findAllPet, findOnePet, updatePet, deletePet } = require('../controllers/pet');
 
 const router = [
     {
         method: "POST",
         path: "/aquarium/{aquarium_id}/pets",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: createPet,
+            validate: createSchema
         }
     },
     {
         method: "GET",
         path: "/aquarium/{aquarium_id}/pets",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: findAllPet,
+            validate: getAllSchema
         }
     },
     {
         method: "GET",
         path: "/aquarium/{aquarium_id}/pets/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: findOnePet,
+            validate: getOneSchema
         }
     },
     {
         method: "PUT",
         path: "/aquarium/{aquarium_id}/pets/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: updatePet,
+            validate: updateSchema
         }
     },
     {
         method: "DELETE",
         path: "/aquarium/{aquarium_id}/pets/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: deletePet,
+            validate: deleteSchema
         }
     }
 ];

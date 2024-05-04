@@ -1,22 +1,22 @@
 const prisma = require('../../prisma/index')
 
 /**
- * @description Busca todos os acessórios vinculados ao acessórios.
+ * @description Busca todos os pets vinculados ao aquário.
  * @param {string} aquariumId - Id do aquário.
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @returns {object} Lista de acessórios.
+ * @returns {object} Lista de pets com a contagem total de pets vinculadas ao aquário.
  */
 const findAll = async (aquariumId, query, logger) => {
     try {
-        const result = await prisma.accessory.findMany({
+        const result = await prisma.pet.findMany({
             where: {
                 aquariumId,
                 ...query
             },
             select: {
                 id: true,
-                name: true,
+                species: true,
                 quantity: true,
                 created_at: true,
                 updated_at: true
@@ -30,18 +30,18 @@ const findAll = async (aquariumId, query, logger) => {
 };
 
 /**
- * @description Criação de um novo acessório.
- * @param {object} payload - Parâmetros de criação de um novo acessórios.
+ * @description Criação de um novo pet.
+ * @param {object} payload - Parâmetros de criação de um novo pet.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios criado.
+ * @returns {object} Dados do pet criado.
  */
 const create = async (payload, logger) => {
     try {
-        const result = await prisma.accessory.create({
+        const result = await prisma.pet.create({
             data: payload,
             select: {
                 id: true,
-                name: true,
+                species: true,
                 quantity: true,
                 created_at: true,
                 updated_at: true
@@ -55,22 +55,22 @@ const create = async (payload, logger) => {
 };
 
 /**
- * @description Busca apenas um acessórios.
+ * @description Busca apenas um pet.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessório.
+ * @param {number} id - Id do pet.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios.
+ * @returns {object} Dados do pet.
  */
 const findOne = async (aquariumId, id, logger) => {
     try {
-        const result = await prisma.accessory.findUnique({
+        const result = await prisma.pet.findUnique({
             where: {
                 aquariumId,
                 id
             },
             select: {
                 id: true,
-                name: true,
+                species: true,
                 quantity: true,
                 created_at: true,
                 updated_at: true
@@ -84,16 +84,16 @@ const findOne = async (aquariumId, id, logger) => {
 };
 
 /**
- * @description Atualiza os dados do acessórios.
+ * @description Atualiza os dados do pet.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessórios
- * @param {object} payload - Parâmetros de atualização do acessórios.
+ * @param {number} id - Id do pet
+ * @param {object} payload - Parâmetros de atualização do pet.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @returns {object} Dados do acessórios atualizado.
+ * @returns {object} Dados do pet atualizado.
  */
 const update = async (aquariumId, id, payload, logger) => {
     try {
-        const result = await prisma.accessory.update({
+        const result = await prisma.pet.update({
             where: {
                 aquariumId,
                 id
@@ -101,7 +101,7 @@ const update = async (aquariumId, id, payload, logger) => {
             data: payload,
             select: {
                 id: true,
-                name: true,
+                species: true,
                 quantity: true,
                 created_at: true,
                 updated_at: true
@@ -115,22 +115,22 @@ const update = async (aquariumId, id, payload, logger) => {
 };
 
 /**
- * @description Deleta um acessórios.
+ * @description Deleta o pet.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessórios.
+ * @param {number} id - Id do pet.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios deletado.
+ * @returns {object} Dados do pet deletado.
  */
 const destroy = async (aquariumId, id, logger) => {
     try {
-        const result = await prisma.accessory.delete({
+        const result = await prisma.pet.delete({
             where: {
                 aquariumId,
                 id
             },
             select: {
                 id: true,
-                name: true,
+                species: true,
                 quantity: true,
                 created_at: true,
                 updated_at: true

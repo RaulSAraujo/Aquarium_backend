@@ -1,39 +1,46 @@
+const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema } = require('../schemas/sensor');
+const { createSensor, findAllSensor, findOneSensor, updateSensor, deleteSensor } = require('../controllers/sensor');
+
 
 const router = [
-
     {
         method: "POST",
         path: "/aquarium/{aquarium_id}/sensors",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: createSensor,
+            validate: createSchema
         }
     },
     {
         method: "GET",
         path: "/aquarium/{aquarium_id}/sensors",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: findAllSensor,
+            validate: getAllSchema
         }
     },
     {
         method: "GET",
         path: "/aquarium/{aquarium_id}/sensors/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: findOneSensor,
+            validate: getOneSchema
         }
     },
     {
         method: "PUT",
         path: "/aquarium/{aquarium_id}/sensors/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: updateSensor,
+            validate: updateSchema
         }
     },
     {
         method: "DELETE",
         path: "/aquarium/{aquarium_id}/sensors/{id}",
-        handler: (req, h) => {
-            return "Aquarium router";
+        options: {
+            handler: deleteSensor,
+            validate: deleteSchema
         }
     }
 ];

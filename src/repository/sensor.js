@@ -1,15 +1,15 @@
 const prisma = require('../../prisma/index')
 
 /**
- * @description Busca todos os acessórios vinculados ao acessórios.
+ * @description Busca todos os sensores vinculados ao aquário.
  * @param {string} aquariumId - Id do aquário.
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @returns {object} Lista de acessórios.
+ * @returns {object} Lista de sensores com a contagem total de sensores vinculadas ao aquário.
  */
 const findAll = async (aquariumId, query, logger) => {
     try {
-        const result = await prisma.accessory.findMany({
+        const result = await prisma.sensor.findMany({
             where: {
                 aquariumId,
                 ...query
@@ -17,7 +17,8 @@ const findAll = async (aquariumId, query, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
+                metric: true,
+                value: true,
                 created_at: true,
                 updated_at: true
             }
@@ -30,19 +31,20 @@ const findAll = async (aquariumId, query, logger) => {
 };
 
 /**
- * @description Criação de um novo acessório.
- * @param {object} payload - Parâmetros de criação de um novo acessórios.
+ * @description Criação de um novo sensor.
+ * @param {object} payload - Parâmetros de criação de um novo sensor.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios criado.
+ * @returns {object} Dados do sensor criado.
  */
 const create = async (payload, logger) => {
     try {
-        const result = await prisma.accessory.create({
+        const result = await prisma.sensor.create({
             data: payload,
             select: {
                 id: true,
                 name: true,
-                quantity: true,
+                metric: true,
+                value: true,
                 created_at: true,
                 updated_at: true
             }
@@ -55,15 +57,15 @@ const create = async (payload, logger) => {
 };
 
 /**
- * @description Busca apenas um acessórios.
+ * @description Busca apenas um sensor.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessório.
+ * @param {number} id - Id do sensor.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios.
+ * @returns {object} Dados do sensor.
  */
 const findOne = async (aquariumId, id, logger) => {
     try {
-        const result = await prisma.accessory.findUnique({
+        const result = await prisma.sensor.findUnique({
             where: {
                 aquariumId,
                 id
@@ -71,7 +73,8 @@ const findOne = async (aquariumId, id, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
+                metric: true,
+                value: true,
                 created_at: true,
                 updated_at: true
             }
@@ -84,16 +87,16 @@ const findOne = async (aquariumId, id, logger) => {
 };
 
 /**
- * @description Atualiza os dados do acessórios.
+ * @description Atualiza os dados do sensor.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessórios
- * @param {object} payload - Parâmetros de atualização do acessórios.
+ * @param {number} id - Id do sensor
+ * @param {object} payload - Parâmetros de atualização do sensor.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @returns {object} Dados do acessórios atualizado.
+ * @returns {object} Dados do sensor atualizado.
  */
 const update = async (aquariumId, id, payload, logger) => {
     try {
-        const result = await prisma.accessory.update({
+        const result = await prisma.sensor.update({
             where: {
                 aquariumId,
                 id
@@ -102,7 +105,8 @@ const update = async (aquariumId, id, payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
+                metric: true,
+                value: true,
                 created_at: true,
                 updated_at: true
             }
@@ -115,15 +119,15 @@ const update = async (aquariumId, id, payload, logger) => {
 };
 
 /**
- * @description Deleta um acessórios.
+ * @description Deleta o sensor.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} id - Id do acessórios.
+ * @param {number} id - Id do sensor.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @returns {object} Dados do acessórios deletado.
+ * @returns {object} Dados do sensor deletado.
  */
 const destroy = async (aquariumId, id, logger) => {
     try {
-        const result = await prisma.accessory.delete({
+        const result = await prisma.sensor.delete({
             where: {
                 aquariumId,
                 id
@@ -131,7 +135,8 @@ const destroy = async (aquariumId, id, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
+                metric: true,
+                value: true,
                 created_at: true,
                 updated_at: true
             }

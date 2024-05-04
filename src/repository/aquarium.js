@@ -27,12 +27,13 @@ const findAll = async (page, itemsPerPage, query, logger) => {
                 depth: true,
                 voltage: true,
                 created_at: true,
-                updated_at: true
+                updated_at: true,
+                _count: true
             },
             skip: (page - 1) * itemsPerPage,
             take: itemsPerPage
-        })
-        const count = await prisma.aquarium.count()
+        });
+        const count = await prisma.aquarium.count();
 
         return { result, count };
     } catch (err) {
@@ -49,8 +50,23 @@ const findAll = async (page, itemsPerPage, query, logger) => {
 const create = async (payload, logger) => {
     try {
         const result = await prisma.aquarium.create({
-            data: payload
-        })
+            data: payload,
+            select: {
+                id: true,
+                name: true,
+                icon: true,
+                format_aquarium: true,
+                material: true,
+                thickness: true,
+                capacity: true,
+                height: true,
+                width: true,
+                depth: true,
+                voltage: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
 
         return result;
     } catch (err) {
@@ -69,8 +85,23 @@ const findOne = async (id, logger) => {
         const result = await prisma.aquarium.findUnique({
             where: {
                 id
+            },
+            select: {
+                id: true,
+                name: true,
+                icon: true,
+                format_aquarium: true,
+                material: true,
+                thickness: true,
+                capacity: true,
+                height: true,
+                width: true,
+                depth: true,
+                voltage: true,
+                created_at: true,
+                updated_at: true
             }
-        })
+        });
 
         return result;
     } catch (err) {
@@ -91,8 +122,23 @@ const update = async (id, payload, logger) => {
             where: {
                 id,
             },
-            data: payload
-        })
+            data: payload,
+            select: {
+                id: true,
+                name: true,
+                icon: true,
+                format_aquarium: true,
+                material: true,
+                thickness: true,
+                capacity: true,
+                height: true,
+                width: true,
+                depth: true,
+                voltage: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
 
         return result;
     } catch (err) {
@@ -111,8 +157,23 @@ const destroy = async (id, logger) => {
         const result = await prisma.aquarium.delete({
             where: {
                 id
+            },
+            select: {
+                id: true,
+                name: true,
+                icon: true,
+                format_aquarium: true,
+                material: true,
+                thickness: true,
+                capacity: true,
+                height: true,
+                width: true,
+                depth: true,
+                voltage: true,
+                created_at: true,
+                updated_at: true
             }
-        })
+        });
 
         return result;
     } catch (err) {
