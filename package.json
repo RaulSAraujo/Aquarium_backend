@@ -7,10 +7,11 @@
   "author": "Raul Silva Araujo",
   "license": "MIT",
   "scripts": {
+    "start": "node --env-file .env index.js",
     "dev": "node --env-file .env --watch index.js"
   },
   "dependencies": {
-    "@hapi/hapi": "^21.3.9",
+    "@hapi/hapi": "^21.3.9", 
     "@prisma/client": "^5.13.0",
     "bcrypt": "^5.1.1",
     "hapi-auth-jwt2": "^10.5.1",
