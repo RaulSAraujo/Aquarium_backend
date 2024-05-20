@@ -27,8 +27,7 @@ const findAll = async (page, itemsPerPage, query, logger) => {
                 depth: true,
                 voltage: true,
                 created_at: true,
-                updated_at: true,
-                _count: true
+                updated_at: true
             },
             skip: (page - 1) * itemsPerPage,
             take: itemsPerPage

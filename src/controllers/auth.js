@@ -15,7 +15,7 @@ const register = async (request, h) => {
 
     const body = {
         message,
-        data: { token, ...result }
+        data: { jwt: token, user: result }
     };
 
     return h.response(body).code(code);
@@ -34,7 +34,7 @@ const login = async (request, h) => {
 
     if (validUser) {
         let token = jwt.sign({ id: result.id }, process.env.JWT_SECRET);
-        body.data = { ...body.data, token}
+        body.data = { ...body.data, token }
     } else {
         body.message = "Usuário inválido."
     }
