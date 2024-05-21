@@ -2,9 +2,10 @@ const Hapi = require("@hapi/hapi");
 const router = require("./src/routes");
 
 const server = Hapi.server({
+  port: process.env.PORT || 4000,
+  host: "0.0.0.0",
   routes: {
-    port: process.env.PORT || 4000,
-    host: '0.0.0.0',
+    cors: true
   }
 });
 
