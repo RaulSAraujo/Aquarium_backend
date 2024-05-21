@@ -6,12 +6,16 @@
   "type": "commonjs",
   "author": "Raul Silva Araujo",
   "license": "MIT",
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
-    "start": "node --env-file .env index.js",
-    "dev": "node --env-file .env --watch index.js"
+    "dev": "node --env-file .env --watch index.js",
+    "build": "tsup index.js",
+    "start": "node --env-file .env index.js"
   },
   "dependencies": {
-    "@hapi/hapi": "^21.3.9", 
+    "@hapi/hapi": "^21.3.9",
     "@prisma/client": "^5.13.0",
     "bcrypt": "^5.1.1",
     "hapi-auth-jwt2": "^10.5.1",
@@ -22,6 +26,7 @@
     "pino-pretty": "^11.0.0"
   },
   "devDependencies": {
-    "prisma": "^5.13.0"
+    "prisma": "^5.13.0",
+    "tsup": "^7.2.0"
   }
 }
