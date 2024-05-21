@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node --env-file .env --watch index.js",
-    "build": "tsup index.js",
+    "build": "npx prisma migrate",
     "start": "node index.js"
   },
   "dependencies": {
@@ -24,7 +24,6 @@
     "pino-pretty": "^11.0.0"
   },
   "devDependencies": {
-    "prisma": "^5.13.0",
-    "tsup": "^7.2.0"
+    "prisma": "^5.13.0"
   }
 }
