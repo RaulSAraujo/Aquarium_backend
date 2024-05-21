@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "node --env-file .env --watch index.js",
     "build": "tsup index.js",
-    "start": "node --env-file .env index.js"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.9",
