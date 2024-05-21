@@ -23,7 +23,7 @@ const register = async (request, h) => {
 
 const login = async (request, h) => {
     let { username, password } = request.payload;
-    const { message, code, result } = await business.signIn(username, request.logger)
+    const { message, code, result } = await business.login(username, request.logger)
 
     const body = {
         message,
