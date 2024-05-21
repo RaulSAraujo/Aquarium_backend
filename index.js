@@ -37,6 +37,11 @@ const validate = async (decoded, request, h) => {
     }
   });
 
+  await server.register({
+    plugin: require("@hapi/inert"),
+    options: {}
+  });
+
   await server.register(require('hapi-auth-jwt2'));
 
   server.auth.strategy('jwt', 'jwt', { key: process.env.JWT_SECRET, validate });
