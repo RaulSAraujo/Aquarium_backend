@@ -10,11 +10,14 @@ const createSchema = {
     payload: Joi.object({
         name: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light')
-            .required(),
-        quantity: Joi
-            .number()
-            .integer()
+            .valid(
+                'Filtro',
+                'Luz LED',
+                'Bombinha',
+                'Plantas naturais',
+                'Alimentador automático',
+                'Termostato / Aquecedor',
+            )
             .required()
     })
 };
@@ -28,10 +31,14 @@ const getAllSchema = {
     query: Joi.object({
         name: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
-            .number()
-            .integer()
+            .valid(
+                'Filtro',
+                'Luz LED',
+                'Bombinha',
+                'Plantas naturais',
+                'Alimentador automático',
+                'Termostato / Aquecedor'
+            )
     })
 };
 
@@ -47,10 +54,14 @@ const getOneSchema = {
     query: Joi.object({
         name: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
-            .number()
-            .integer()
+            .valid(
+                'Filtro',
+                'Luz LED',
+                'Bombinha',
+                'Plantas naturais',
+                'Alimentador automático',
+                'Termostato / Aquecedor'
+            ),
     })
 };
 
@@ -66,10 +77,14 @@ const updateSchema = {
     payload: Joi.object({
         name: Joi
             .string()
-            .valid('auto feeder', 'thermostat / heater', 'filter', 'bomb', 'led light'),
-        quantity: Joi
-            .number()
-            .integer()
+            .valid(
+                'Filtro',
+                'Luz LED',
+                'Bombinha',
+                'Plantas naturais',
+                'Alimentador automático',
+                'Termostato / Aquecedor'
+            ),
     })
 };
 

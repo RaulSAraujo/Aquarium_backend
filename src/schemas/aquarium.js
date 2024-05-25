@@ -7,9 +7,6 @@ const createSchema = {
             .string()
             .min(3)
             .required(),
-        icon: Joi
-            .string()
-            .required(),
         format_aquarium: Joi
             .string()
             .valid('rectangular', 'curved', 'hexagonal')
@@ -30,12 +27,8 @@ const createSchema = {
         height: Joi
             .number()
             .description('Define measurements in cm')
-            .required(),
+            .required(), 
         width: Joi
-            .number()
-            .description('Define measurements in cm')
-            .required(),
-        depth: Joi
             .number()
             .description('Define measurements in cm')
             .required(),
@@ -77,9 +70,6 @@ const getAllSchema = {
         width: Joi
             .number()
             .description('Define measurements in cm'),
-        depth: Joi
-            .number()
-            .description('Define measurements in cm'),
         voltage: Joi
             .string()
             .valid('110', '220')
@@ -114,9 +104,6 @@ const getOneSchema = {
         width: Joi
             .number()
             .description('Define measurements in cm'),
-        depth: Joi
-            .number()
-            .description('Define measurements in cm'),
         voltage: Joi
             .string()
             .valid('110', '220')
@@ -131,8 +118,6 @@ const updateSchema = {
     }),
     payload: Joi.object({
         name: Joi
-            .string(),
-        icon: Joi
             .string(),
         format_aquarium: Joi
             .string()
@@ -151,9 +136,6 @@ const updateSchema = {
             .number()
             .description('Define measurements in cm'),
         width: Joi
-            .number()
-            .description('Define measurements in cm'),
-        depth: Joi
             .number()
             .description('Define measurements in cm'),
         voltage: Joi

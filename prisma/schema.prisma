@@ -26,14 +26,12 @@ model user {
 model aquarium {
   id              String      @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  icon            String
   format_aquarium String
   material        String
   thickness       Int
   capacity        Float
   height          Float
   width           Float
-  depth           Float
   voltage         String
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt

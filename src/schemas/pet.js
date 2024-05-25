@@ -10,7 +10,12 @@ const createSchema = {
     payload: Joi.object({
         species: Joi
             .string()
-            .valid('fish', 'turtle', 'snake')
+            .valid(
+                'Sapo',
+                'Cobra',
+                'Peixe',
+                'Tartaruga'
+            )
             .required(),
         quantity: Joi
             .number()
@@ -28,7 +33,12 @@ const getAllSchema = {
     query: Joi.object({
         species: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid(
+                'Sapo',
+                'Cobra',
+                'Peixe',
+                'Tartaruga'
+            ),
         quantity: Joi
             .number()
             .integer()
@@ -47,7 +57,12 @@ const getOneSchema = {
     query: Joi.object({
         species: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid(
+                'Sapo',
+                'Cobra',
+                'Peixe',
+                'Tartaruga'
+            ),
         quantity: Joi
             .number()
             .integer()
@@ -66,7 +81,12 @@ const updateSchema = {
     payload: Joi.object({
         species: Joi
             .string()
-            .valid('fish', 'turtle', 'snake'),
+            .valid(
+                'Sapo',
+                'Cobra',
+                'Peixe',
+                'Tartaruga'
+            ),
         quantity: Joi
             .number()
             .integer()

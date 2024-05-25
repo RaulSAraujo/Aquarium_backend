@@ -13,12 +13,17 @@ const createSchema = {
             .required(),
         metric: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity')
-            .required(),
+            .valid(
+                'pH',
+                'Oxigénio',
+                'Luminosidade',
+                'Nível de água',
+                'Temperatura externa',
+                'Temperatura interna'
+            ),
         value: Joi
             .number()
             .integer()
-            .required()
     })
 };
 
@@ -33,7 +38,14 @@ const getAllSchema = {
             .string(),
         metric: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+            .valid(
+                'pH',
+                'Oxigénio',
+                'Luminosidade',
+                'Nível de água',
+                'Temperatura externa',
+                'Temperatura interna'
+            ),
         value: Joi
             .number()
             .integer()
@@ -54,7 +66,14 @@ const getOneSchema = {
             .string(),
         metric: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+            .valid(
+                'pH',
+                'Oxigénio',
+                'Luminosidade',
+                'Nível de água',
+                'Temperatura externa',
+                'Temperatura interna'
+            ),
         value: Joi
             .number()
             .integer()
@@ -75,7 +94,14 @@ const updateSchema = {
             .string(),
         metric: Joi
             .string()
-            .valid('temperature', 'ph', 'oxygen level', 'water level', 'luminosity'),
+            .valid(
+                'pH',
+                'Oxigénio',
+                'Luminosidade',
+                'Nível de água',
+                'Temperatura externa',
+                'Temperatura interna'
+            ),
         value: Joi
             .number()
             .integer()
