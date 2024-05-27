@@ -9,32 +9,31 @@ const createSchema = {
             .required(),
         format_aquarium: Joi
             .string()
-            .valid('rectangular', 'curved', 'hexagonal')
+            .valid('Retangular', 'Curvo', 'Sextavado')
             .required(),
         material: Joi
             .string()
-            .valid('glass', 'acrylic', 'plastic')
+            .valid('Vidro', 'Acrílico', 'Plástico')
             .required(),
         thickness: Joi
-            .number()
-            .integer()
+            .string()
             .description('Define measurements in mm')
             .required(),
         capacity: Joi
-            .number()
+            .string()
             .description('Define measurements in liters')
             .required(),
         height: Joi
-            .number()
+            .string()
             .description('Define measurements in cm')
             .required(), 
         width: Joi
-            .number()
+            .string()
             .description('Define measurements in cm')
             .required(),
         voltage: Joi
             .string()
-            .valid('110', '220')
+            .valid('110V', '220V')
             .required()
     })
 };
@@ -53,26 +52,25 @@ const getAllSchema = {
             .string(),
         format_aquarium: Joi
             .string()
-            .valid('rectangular', 'curved', 'hexagonal'),
+            .valid('Retangular', 'Curvo', 'Sextavado'),
         material: Joi
             .string()
-            .valid('glass', 'acrylic', 'plastic'),
+            .valid('Vidro', 'Acrílico', 'Plástico'),
         thickness: Joi
-            .number()
-            .integer()
+            .string()
             .description('Define measurements in mm'),
         capacity: Joi
-            .number()
+            .string()
             .description('Define measurements in liters'),
         height: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         width: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         voltage: Joi
             .string()
-            .valid('110', '220')
+            .valid('110V', '220V')
     })
 };
 
@@ -87,26 +85,25 @@ const getOneSchema = {
             .string(),
         format_aquarium: Joi
             .string()
-            .valid('rectangular', 'curved', 'hexagonal'),
+            .valid('Retangular', 'Curvo', 'Sextavado'),
         material: Joi
             .string()
-            .valid('glass', 'acrylic', 'plastic'),
+            .valid('Vidro', 'Acrílico', 'Plástico'),
         thickness: Joi
-            .number()
-            .integer()
+            .string()
             .description('Define measurements in mm'),
         capacity: Joi
-            .number()
+            .string()
             .description('Define measurements in liters'),
         height: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         width: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         voltage: Joi
             .string()
-            .valid('110', '220')
+            .valid('110V', '220V')
     })
 };
 
@@ -121,26 +118,25 @@ const updateSchema = {
             .string(),
         format_aquarium: Joi
             .string()
-            .valid('rectangular', 'curved', 'hexagonal'),
+            .valid('Retangular', 'Curvo', 'Sextavado'),
         material: Joi
             .string()
-            .valid('glass', 'acrylic', 'plastic'),
+            .valid('Vidro', 'Acrílico', 'Plástico'),
         thickness: Joi
-            .number()
-            .integer()
+            .string()
             .description('Define measurements in mm'),
         capacity: Joi
-            .number()
+            .string()
             .description('Define measurements in liters'),
         height: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         width: Joi
-            .number()
+            .string()
             .description('Define measurements in cm'),
         voltage: Joi
             .string()
-            .valid('110', '220')
+            .valid('110V', '220V')
     })
 };
 
