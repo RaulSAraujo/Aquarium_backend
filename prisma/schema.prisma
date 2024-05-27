@@ -28,10 +28,9 @@ model aquarium {
   name            String
   format_aquarium String
   material        String
-  thickness       Int
-  capacity        Float
-  height          Float
-  width           Float
+  thickness       String
+  capacity        String
+  height          String
   voltage         String
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
