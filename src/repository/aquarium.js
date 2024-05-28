@@ -17,15 +17,12 @@ const findAll = async (page, itemsPerPage, query, logger) => {
             select: {
                 id: true,
                 name: true,
-                icon: true,
                 format_aquarium: true,
                 material: true,
                 thickness: true,
-                capacity: true,
                 height: true,
-                width: true,
-                depth: true,
                 voltage: true,
+                capacity: true,
                 created_at: true,
                 updated_at: true
             },
@@ -53,14 +50,11 @@ const create = async (payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                icon: true,
                 format_aquarium: true,
                 material: true,
                 thickness: true,
                 capacity: true,
                 height: true,
-                width: true,
-                depth: true,
                 voltage: true,
                 created_at: true,
                 updated_at: true
@@ -88,14 +82,11 @@ const findOne = async (id, logger) => {
             select: {
                 id: true,
                 name: true,
-                icon: true,
                 format_aquarium: true,
                 material: true,
                 thickness: true,
                 capacity: true,
                 height: true,
-                width: true,
-                depth: true,
                 voltage: true,
                 created_at: true,
                 updated_at: true
@@ -125,14 +116,11 @@ const update = async (id, payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                icon: true,
                 format_aquarium: true,
                 material: true,
                 thickness: true,
                 capacity: true,
                 height: true,
-                width: true,
-                depth: true,
                 voltage: true,
                 created_at: true,
                 updated_at: true
@@ -160,14 +148,11 @@ const destroy = async (id, logger) => {
             select: {
                 id: true,
                 name: true,
-                icon: true,
                 format_aquarium: true,
                 material: true,
                 thickness: true,
                 capacity: true,
                 height: true,
-                width: true,
-                depth: true,
                 voltage: true,
                 created_at: true,
                 updated_at: true
