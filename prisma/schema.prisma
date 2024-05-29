@@ -44,7 +44,6 @@ model aquarium {
 model accessory {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  quantity   Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   aquarium   aquarium? @relation(fields: [aquariumId], references: [id])
