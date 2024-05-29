@@ -17,7 +17,6 @@ const findAll = async (aquariumId, query, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
                 created_at: true,
                 updated_at: true
             }
@@ -42,7 +41,6 @@ const create = async (payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
                 created_at: true,
                 updated_at: true
             }
@@ -71,7 +69,6 @@ const findOne = async (aquariumId, id, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
                 created_at: true,
                 updated_at: true
             }
@@ -102,7 +99,6 @@ const update = async (aquariumId, id, payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
                 created_at: true,
                 updated_at: true
             }
@@ -131,7 +127,6 @@ const destroy = async (aquariumId, id, logger) => {
             select: {
                 id: true,
                 name: true,
-                quantity: true,
                 created_at: true,
                 updated_at: true
             }
