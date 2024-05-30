@@ -12,11 +12,8 @@ const business = require('../business/accessory');
 const findAllAccessory = async (request, h) => {
   const { params: { aquarium_id }, query, logger } = request;
   const { code, result } = await business.findAll(aquarium_id, query, logger);
-  const body = {
-    data: result,
-  };
 
-  return h.response(body).code(code);
+  return h.response(result).code(code);
 };
 
 /**
@@ -34,7 +31,7 @@ const createAccessory = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -55,7 +52,7 @@ const findOneAccessory = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result 
   };
 
   return h.response(body).code(code);
@@ -77,7 +74,7 @@ const updateAccessory = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -98,7 +95,7 @@ const deleteAccessory = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);

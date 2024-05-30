@@ -25,7 +25,7 @@ const findAllAquarium = async (request, h) => {
       itemsPerPage: itemsPerPage < 50 ? itemsPerPage : 50,
       maxItemsPerPage: 50
     },
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -42,7 +42,7 @@ const createAquarium = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -59,7 +59,7 @@ const findOneAquarium = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -77,7 +77,7 @@ const updateAquarium = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -94,7 +94,7 @@ const deleteAquarium = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);

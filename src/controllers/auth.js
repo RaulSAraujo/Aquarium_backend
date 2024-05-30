@@ -25,16 +25,16 @@ const login = async (request, h) => {
     let { username, password } = request.payload;
     const { message, code, result } = await business.login(username, request.logger)
 
-    const body = {
+    let body = {
         message,
-        data: result
+        result
     };
 
     let validUser = result && (await bcrypt.compareSync(password, result.password));
 
     if (validUser) {
         let token = jwt.sign({ id: result.id }, process.env.JWT_SECRET);
-        body.data = { ...body.data, token }
+        body = { ...body, jwt: token }
     } else {
         body.message = "Usuário inválido."
     }

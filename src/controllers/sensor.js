@@ -12,11 +12,8 @@ const business = require('../business/sensor');
 const findAllSensor = async (request, h) => {
   const { params: { aquarium_id }, query, logger } = request;
   const { code, result } = await business.findAll(aquarium_id, query, logger);
-  const body = {
-    data: result
-  };
 
-  return h.response(body).code(code);
+  return h.response(result).code(code);
 };
 
 /**
@@ -34,7 +31,7 @@ const createSensor = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -55,7 +52,7 @@ const findOneSensor = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -77,7 +74,7 @@ const updateSensor = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
@@ -98,7 +95,7 @@ const deleteSensor = async (request, h) => {
 
   const body = {
     message,
-    data: result
+    result
   };
 
   return h.response(body).code(code);
