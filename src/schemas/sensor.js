@@ -24,6 +24,7 @@ const createSchema = {
         value: Joi
             .number()
             .integer()
+            .default(0)
     })
 };
 

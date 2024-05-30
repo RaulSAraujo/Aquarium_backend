@@ -36,14 +36,6 @@ const createSchema = {
 
 const getAllSchema = {
     query: Joi.object({
-        page: Joi
-            .number()
-            .integer()
-            .default(1),
-        itemsPerPage: Joi
-            .number()
-            .integer()
-            .default(10),
         name: Joi
             .string(),
         format_aquarium: Joi

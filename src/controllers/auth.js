@@ -15,7 +15,8 @@ const register = async (request, h) => {
 
     const body = {
         message,
-        data: { jwt: token, user: result }
+        jwt: token,
+        user: result
     };
 
     return h.response(body).code(code);

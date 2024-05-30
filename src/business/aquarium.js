@@ -1,27 +1,27 @@
 const repository = require('../repository/aquarium');
 
 /**
- * @param {number} page - Pagina atual.
- * @param {number} itemsPerPage - Quatidade de itens exibidos na pagina.
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @param {object} user - Dados do usuario.
  * @callback repository.findAll Realiza a consulta no banco de dados.
  * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
-const findAll = async (page, itemsPerPage, query, logger) => {
-    const { result, count } = await repository.findAll(page, itemsPerPage, query, logger);
+const findAll = async (query, logger, user) => {
+    const result = await repository.findAll(query, logger, user);
 
-    return { message: undefined, code: 200, result, count };
+    return { message: undefined, code: 200, result };
 };
 
 /**
  * @param {object} payload - Parâmetros de criação.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @param {object} user - Dados do usuario.
  * @callback repository.create Realiza a criação do aquário no banco de dados
  * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
-const create = async (payload, logger) => {
-    const result = await repository.create(payload, logger);
+const create = async (payload, logger, user) => {
+    const result = await repository.create(payload, logger, user);
 
     return { message: 'Aquário criado com sucesso.', code: 201, result };
 };
@@ -29,11 +29,12 @@ const create = async (payload, logger) => {
 /**
  * @param {number} id - Id do aquário.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @param {object} user - Dados do usuario.
  * @callback repository.findOne Realiza a busca do aquário de acordo com o id.
  * @returns {object} message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
-const findOne = async (id, logger) => {
-    const result = await repository.findOne(id, logger);
+const findOne = async (id, logger, user) => {
+    const result = await repository.findOne(id, logger, user);
 
     if (!result) return { message: "Aquário não encontrado.", code: 404, result: undefined };
 
@@ -45,16 +46,17 @@ const findOne = async (id, logger) => {
  * @param {number} id - Id do aquário.
  * @param {object} payload - Parâmetros para a atualização do aquário.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @param {object} user - Dados do usuario.
  * @callback repository.findOne Busca o aquário pelo id.
  * @throws {Error} Se o id for invalido.
  * @returns {object}  message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
-const update = async (id, payload, logger) => {
-    const aquarium = await repository.findOne(id);
+const update = async (id, payload, logger, user) => {
+    const aquarium = await repository.findOne(id, logger, user);
 
     if (!aquarium) return { message: "Aquário não encontrado.", code: 404, result: undefined };
 
-    const result = await repository.update(id, payload, logger);
+    const result = await repository.update(id, payload, logger, user);
 
     return { message: "Dados do aquário atualizado com sucesso.", code: 200, result };
 };
@@ -63,16 +65,17 @@ const update = async (id, payload, logger) => {
  * @description Verifica se o aquário é valido para deletar.
  * @param {number} id - Id do aquário.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @param {object} user - Dados do usuario.
  * @callback repository.findOne Busca o aquário pelo id.
  * @throws {Error} Se o id for invalido.
  * @returns {object}  message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados, count: Total de registros no banco de dados.
  */
-const destroy = async (id, logger) => {
-    const aquarium = await repository.findOne(id);
+const destroy = async (id, logger, user) => {
+    const aquarium = await repository.findOne(id, logger, user);
 
     if (!aquarium) return { message: "Aquário não encontrado.", code: 404, result: undefined };
 
-    const result = await repository.destroy(id, logger);
+    const result = await repository.destroy(id, logger, user);
 
     return { message: "Aquário deletado com sucesso.", code: 200, result };
 };
