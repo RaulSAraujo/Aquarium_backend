@@ -15,11 +15,11 @@ const createSchema = {
             .string()
             .valid(
                 'pH',
-                'Oxigénio',
+                'Saturação',
                 'Luminosidade',
                 'Nível de água',
-                'Temperatura externa',
-                'Temperatura interna'
+                'Nível oxigênio',
+                'Temperatura',
             ),
         value: Joi
             .number()
