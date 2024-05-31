@@ -4,7 +4,7 @@ const User = require("./src/repository/user")
 const validate = async (decoded, request, h) => {
   let user = await User.findOne(decoded.id, request.logger);
   if (user) {
-    request.user = user;
+    global.user = user
     return { isValid: true };
   } else {
     return { isValid: false };

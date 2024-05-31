@@ -52,9 +52,10 @@ model accessory {
 
 model sensor {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  metric     String
-  value      Int
+  name       String    @unique
+  metric     String?   @unique
+  current    String?
+  old_values String[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   aquarium   aquarium? @relation(fields: [aquariumId], references: [id])

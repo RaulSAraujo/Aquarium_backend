@@ -8,7 +8,7 @@ const business = require('../business/aquarium');
  * @returns {void}
  */
 const findAllAquarium = async (request, h) => {
-  const { code, result } = await business.findAll(request.query, request.logger, request.user);
+  const { code, result } = await business.findAll(request.query, request.logger);
 
   return h.response(result).code(code);
 };
@@ -20,7 +20,7 @@ const findAllAquarium = async (request, h) => {
  * @returns {void}
  */
 const createAquarium = async (request, h) => {
-  const { message, code, result } = await business.create(request.payload, request.logger, request.user);
+  const { message, code, result } = await business.create(request.payload, request.logger);
 
   const body = {
     message,
@@ -37,7 +37,7 @@ const createAquarium = async (request, h) => {
  * @returns {void}
  */
 const findOneAquarium = async (request, h) => {
-  const { message, code, result } = await business.findOne(request.params.id, request.logger, request.user);
+  const { message, code, result } = await business.findOne(request.params.id, request.logger);
 
   const body = {
     message,
@@ -55,7 +55,7 @@ const findOneAquarium = async (request, h) => {
  */
 const updateAquarium = async (request, h) => {
   const { payload, params } = request;
-  const { message, code, result } = await business.update(params.id, payload, request.logger, request.user);
+  const { message, code, result } = await business.update(params.id, payload, request.logger);
 
   const body = {
     message,
@@ -72,7 +72,7 @@ const updateAquarium = async (request, h) => {
  * @returns {void}
  */
 const deleteAquarium = async (request, h) => {
-  const { message, code, result } = await business.destroy(request.params.id, request.logger, request.user);
+  const { message, code, result } = await business.destroy(request.params.id, request.logger);
 
   const body = {
     message,

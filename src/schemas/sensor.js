@@ -21,10 +21,8 @@ const createSchema = {
                 'Nível oxigênio',
                 'Temperatura',
             ),
-        value: Joi
-            .number()
-            .integer()
-            .default(0)
+        current: Joi
+            .string()
     })
 };
 
@@ -41,13 +39,13 @@ const getAllSchema = {
             .string()
             .valid(
                 'pH',
-                'Oxigénio',
+                'Saturação',
                 'Luminosidade',
                 'Nível de água',
-                'Temperatura externa',
-                'Temperatura interna'
+                'Nível oxigênio',
+                'Temperatura',
             ),
-        value: Joi
+        current: Joi
             .number()
             .integer()
     })
@@ -69,13 +67,13 @@ const getOneSchema = {
             .string()
             .valid(
                 'pH',
-                'Oxigénio',
+                'Saturação',
                 'Luminosidade',
                 'Nível de água',
-                'Temperatura externa',
-                'Temperatura interna'
+                'Nível oxigênio',
+                'Temperatura',
             ),
-        value: Joi
+        current: Joi
             .number()
             .integer()
     })
@@ -97,13 +95,13 @@ const updateSchema = {
             .string()
             .valid(
                 'pH',
-                'Oxigénio',
+                'Saturação',
                 'Luminosidade',
                 'Nível de água',
-                'Temperatura externa',
-                'Temperatura interna'
+                'Nível oxigênio',
+                'Temperatura',
             ),
-        value: Joi
+        current: Joi
             .number()
             .integer()
     })

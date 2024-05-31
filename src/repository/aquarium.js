@@ -4,14 +4,13 @@ const prisma = require('../../prisma/index')
  * @description Busca todos os aquários.
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @param {object} user - Dados do usuario.
  * @returns {object} Lista de aquários com a contagem total de aquários.
  */
-const findAll = async (query, logger, user) => {
+const findAll = async (query, logger) => {
     try {
         const result = await prisma.aquarium.findMany({
             where: {
-                userId: user.id,
+                userId: global.user.id,
                 ...query
             },
             select: {
@@ -38,14 +37,13 @@ const findAll = async (query, logger, user) => {
  * @description Criação de um novo aquário.
  * @param {object} payload - Parâmetros de criação de um novo aquário.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @param {object} user - Dados do usuario.
  * @returns {object} Dados do aquário criado.
  */
-const create = async (payload, logger, user) => {
+const create = async (payload, logger) => {
     try {
         const result = await prisma.aquarium.create({
             data: {
-                userId: user.id,
+                userId: global.user.id,
                 ...payload
             },
             select: {
@@ -72,15 +70,14 @@ const create = async (payload, logger, user) => {
  * @description Busca apenas um aquário.
  * @param {number} id - Id do aquário.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @param {object} user - Dados do usuario.
  * @returns {object} Dados do aquário.
  */
-const findOne = async (id, logger, user) => {
+const findOne = async (id, logger) => {
     try {
         const result = await prisma.aquarium.findUnique({
             where: {
                 id,
-                userId: user.id
+                userId: global.user.id
             },
             select: {
                 id: true,
@@ -107,15 +104,14 @@ const findOne = async (id, logger, user) => {
  * @param {number} id - Id do aquário
  * @param {object} payload - Parâmetros de atualização do aquário.
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
- * @param {object} user - Dados do usuario.
  * @returns {object} Dados do aquário atualizado.
  */
-const update = async (id, payload, logger, user) => {
+const update = async (id, payload, logger) => {
     try {
         const result = await prisma.aquarium.update({
             where: {
                 id,
-                userId: user.id,
+                userId: global.user.id,
             },
             data: payload,
             select: {
@@ -142,15 +138,14 @@ const update = async (id, payload, logger, user) => {
  * @description Deleta um aquário.
  * @param {number} id - Id do aquário.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
- * @param {object} user - Dados do usuario.
  * @returns {object} Dados do aquário deletado.
  */
-const destroy = async (id, logger, user) => {
+const destroy = async (id, logger) => {
     try {
         const result = await prisma.aquarium.delete({
             where: {
                 id,
-                userId: user.id,
+                userId: global.user.id,
             },
             select: {
                 id: true,
