@@ -39,6 +39,7 @@ model aquarium {
   accessories     accessory[]
   sensors         sensor[]
   pets            pet[]
+  oldValues       oldValues[]
 }
 
 model accessory {
@@ -51,15 +52,26 @@ model accessory {
 }
 
 model sensor {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String    @unique
-  metric     String?   @unique
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String      @unique
   current    String?
-  old_values String[]
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  old_values oldValues[]
+  aquarium   aquarium?   @relation(fields: [aquariumId], references: [id])
+  aquariumId String?     @db.ObjectId
+}
+
+model oldValues {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  value      String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   aquarium   aquarium? @relation(fields: [aquariumId], references: [id])
   aquariumId String?   @db.ObjectId
+  sensor     sensor?   @relation(fields: [sensorId], references: [id])
+  sensorId   String?   @db.ObjectId
 }
 
 model pet {

@@ -10,9 +10,6 @@ const createSchema = {
     payload: Joi.object({
         name: Joi
             .string()
-            .required(),
-        metric: Joi
-            .string()
             .valid(
                 'pH',
                 'Saturação',
@@ -20,9 +17,17 @@ const createSchema = {
                 'Nível de água',
                 'Nível oxigênio',
                 'Temperatura',
-            ),
+            )
+            .required(),
         current: Joi
             .string()
+            .default("0"),
+        old_values: Joi
+            .array()
+            .items(
+                Joi.string()
+            )
+            .default([])
     })
 };
 
@@ -34,8 +39,6 @@ const getAllSchema = {
     }),
     query: Joi.object({
         name: Joi
-            .string(),
-        metric: Joi
             .string()
             .valid(
                 'pH',
@@ -46,8 +49,7 @@ const getAllSchema = {
                 'Temperatura',
             ),
         current: Joi
-            .number()
-            .integer()
+            .string()
     })
 };
 
@@ -62,8 +64,6 @@ const getOneSchema = {
     }),
     query: Joi.object({
         name: Joi
-            .string(),
-        metric: Joi
             .string()
             .valid(
                 'pH',
@@ -74,8 +74,7 @@ const getOneSchema = {
                 'Temperatura',
             ),
         current: Joi
-            .number()
-            .integer()
+            .string()
     })
 };
 
@@ -90,8 +89,6 @@ const updateSchema = {
     }),
     payload: Joi.object({
         name: Joi
-            .string(),
-        metric: Joi
             .string()
             .valid(
                 'pH',
@@ -102,8 +99,7 @@ const updateSchema = {
                 'Temperatura',
             ),
         current: Joi
-            .number()
-            .integer()
+            .string()
     })
 };
 
@@ -117,6 +113,10 @@ const deleteSchema = {
             .required()
     })
 };
+
+// const getOldValuesSchema = {
+    
+// }
 
 module.exports = {
     createSchema,
