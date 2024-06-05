@@ -21,13 +21,7 @@ const createSchema = {
             .required(),
         current: Joi
             .string()
-            .default("0"),
-        old_values: Joi
-            .array()
-            .items(
-                Joi.string()
-            )
-            .default([])
+            .default("0")
     })
 };
 
@@ -88,18 +82,9 @@ const updateSchema = {
             .required()
     }),
     payload: Joi.object({
-        name: Joi
-            .string()
-            .valid(
-                'pH',
-                'Saturação',
-                'Luminosidade',
-                'Nível de água',
-                'Nível oxigênio',
-                'Temperatura',
-            ),
         current: Joi
             .string()
+            .required()
     })
 };
 
@@ -114,14 +99,36 @@ const deleteSchema = {
     })
 };
 
-// const getOldValuesSchema = {
-    
-// }
+const getOldValuesSchema = {
+    params: Joi.object({
+        aquarium_id: Joi
+            .objectId()
+            .required(),
+        id: Joi
+            .objectId()
+            .required()
+    }),
+    query: Joi.object({
+        name: Joi
+            .string()
+            .valid(
+                'pH',
+                'Saturação',
+                'Luminosidade',
+                'Nível de água',
+                'Nível oxigênio',
+                'Temperatura',
+            ),
+        created_at: Joi
+            .string()
+    })
+}
 
 module.exports = {
     createSchema,
     getAllSchema,
     getOneSchema,
     updateSchema,
-    deleteSchema
+    deleteSchema,
+    getOldValuesSchema
 };

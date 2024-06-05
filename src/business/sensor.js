@@ -51,7 +51,7 @@ const findOne = async (aquariumId, id, logger) => {
 };
 
 /**
- * @description Verifica se o aquário e o sensor são validos e atualizar o sensor.
+ * @description Verifica se o aquário e o sensor são validos e atualizar o sensor e adiciona um historico.
  * @param {string} aquariumId - Id do aquário.
  * @param {string} id - Id do sensor.
  * @param {object} payload - Parâmetros para a atualização do sensor.
@@ -65,11 +65,11 @@ const update = async (aquariumId, id, payload, logger) => {
 
     if (!aquarium) return { message: "Aquário não encontrado.", code: 404, result: undefined };
 
-    const accessory = await repository.findOne(aquariumId, id, logger);
+    const sensor = await repository.findOne(aquariumId, id, logger);
 
-    if (!accessory) return { message: "Sensor não encontrado.", code: 404, result: undefined };
+    if (!sensor) return { message: "Sensor não encontrado.", code: 404, result: undefined };
 
-    const result = await repository.update(aquariumId, id, payload, logger);
+    const result = await repository.update(aquariumId, id, payload, sensor, logger);
 
     return { message: "Dados do sensor atualizados com sucesso.", code: 200, result };
 };
@@ -88,19 +88,44 @@ const destroy = async (aquariumId, id, logger) => {
 
     if (!aquarium) return { message: "Aquário não encontrado.", code: 404, result: undefined };
 
-    const accessory = await repository.findOne(aquariumId, id, logger);
+    const sensor = await repository.findOne(aquariumId, id, logger);
 
-    if (!accessory) return { message: "Sensor não encontrado.", code: 404, result: undefined };
+    if (!sensor) return { message: "Sensor não encontrado.", code: 404, result: undefined };
 
     const result = await repository.destroy(aquariumId, id, logger);
 
     return { message: "Sensor deletado com sucesso.", code: 200, result };
 };
 
+/**
+ * @description Verifica se o aquário e o sensor são validos e busca os dados antigos do sensor.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} sensorId - Id do sensor.
+ * @param {object} query - Parâmetros de busca.
+ * @param {object} logger - Parâmetros do log exe: info, warn, error.
+ * @callback repository.findOne Busca o sensor pelo id.
+ * @throws {Error} Se o id || aquariumId invalido.
+ * @returns {object}  message: Erro ou alerta exibido ao usuario, code: Status HTTP, result: Dados obtidos do banco de dados.
+ */
+const oldValues = async (aquariumId, sensorId, query, logger) => {
+    const aquarium = await aquariumRepository.findOne(aquariumId, logger);
+
+    if (!aquarium) return { message: "Aquário não encontrado.", code: 404, result: undefined };
+
+    const sensor = await repository.findOne(aquariumId, sensorId, logger);
+
+    if (!sensor) return { message: "Sensor não encontrado.", code: 404, result: undefined };
+
+    const result = await repository.oldValues(aquariumId, sensorId, query, logger);
+
+    return { message: undefined, code: 200, result };
+}
+
 module.exports = {
     findAll,
     create,
     findOne,
     update,
-    destroy
+    destroy,
+    oldValues
 };

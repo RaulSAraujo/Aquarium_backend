@@ -17,7 +17,6 @@ const findAll = async (aquariumId, query, logger) => {
             select: {
                 id: true,
                 name: true,
-                metric: true,
                 current: true,
                 old_values: true,
                 created_at: true,
@@ -44,7 +43,6 @@ const create = async (payload, logger) => {
             select: {
                 id: true,
                 name: true,
-                metric: true,
                 created_at: true,
                 updated_at: true
             }
@@ -73,9 +71,7 @@ const findOne = async (aquariumId, id, logger) => {
             select: {
                 id: true,
                 name: true,
-                metric: true,
                 current: true,
-                old_values: true,
                 created_at: true,
                 updated_at: true
             }
@@ -95,26 +91,34 @@ const findOne = async (aquariumId, id, logger) => {
  * @param {object} logger - Parâmetros do log exe: info, warn, error.
  * @returns {object} Dados do sensor atualizado.
  */
-const update = async (aquariumId, id, payload, logger) => {
+const update = async (aquariumId, id, payload, sensor, logger) => {
     try {
-        const result = await prisma.sensor.update({
-            where: {
-                aquariumId,
-                id
-            },
-            data: payload,
-            select: {
-                id: true,
-                name: true,
-                metric: true,
-                current: true,
-                old_values: true,
-                created_at: true,
-                updated_at: true
-            }
-        });
+        const mutation = await prisma.$transaction([
+            prisma.sensor.update({
+                where: {
+                    aquariumId,
+                    id
+                },
+                data: payload,
+                select: {
+                    id: true,
+                    name: true,
+                    current: true,
+                    created_at: true,
+                    updated_at: true
+                }
+            }),
+            prisma.oldValues.create({
+                data: {
+                    name: sensor.name,
+                    value: sensor.current,
+                    aquariumId: aquariumId,
+                    sensorId: id
+                },
+            })
+        ]);
 
-        return result;
+        return mutation[0];
     } catch (err) {
         throw logger.error(err);
     }
@@ -148,10 +152,56 @@ const destroy = async (aquariumId, id, logger) => {
     }
 };
 
+/**
+ * @description Busca os valores antigos do sensor.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} sensorId - Id do sensor.
+ * @param {object} query - Parâmetros de busca.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do sensor deletado.
+ */
+const oldValues = async (aquariumId, sensorId, query, logger) => {
+    try {
+
+        let where = undefined
+        if (query.created_at) {
+            const dates = query.created_at.split(',')
+            where = {
+                name: query.name ? query.name : undefined,
+                created_at: {
+                    gte: new Date(dates[0]).toISOString(), // Data inicial
+                    lte: new Date(dates[1]).toISOString(), // Data final
+                }
+            }
+        }
+
+        const result = await prisma.oldValues.findMany({
+            where: {
+                aquariumId,
+                sensorId,
+                ...where
+            },
+            select: {
+                id: true,
+                name: true,
+                value: true,
+                created_at: true,
+                updated_at: true,
+                sensorId
+            }
+        });
+
+        return result;
+    } catch (err) {
+        throw logger.error(err);
+    }
+}
+
 module.exports = {
     findAll,
     create,
     findOne,
     update,
-    destroy
+    destroy,
+    oldValues
 };

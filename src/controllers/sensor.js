@@ -101,10 +101,27 @@ const deleteSensor = async (request, h) => {
   return h.response(body).code(code);
 };
 
+/**
+ * @description Busca valores antigos do sensor.
+ * @param {*} request 
+ * @param {*} h 
+ * @property {string} id - Id do sensor.
+ * @property {string} aquarium_id - Id do aquário.
+ * @property {object} logger - Parâmetros do log exe: info, warn, error.
+ * @returns {void}
+ */
+const findOldValues = async (request, h) => {
+  const { params: { aquarium_id, id }, query, logger } = request;
+  const { code, result } = await business.oldValues(aquarium_id, id, query, logger);
+
+  return h.response(result).code(code);
+}
+
 module.exports = {
   findAllSensor,
   createSensor,
   findOneSensor,
   updateSensor,
-  deleteSensor
+  deleteSensor,
+  findOldValues
 };
