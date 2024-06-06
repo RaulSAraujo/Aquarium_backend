@@ -1,5 +1,5 @@
-const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema, getOldValuesSchema } = require('../schemas/sensor');
-const { createSensor, findAllSensor, findOneSensor, updateSensor, deleteSensor, findOldValues } = require('../controllers/sensor');
+const { createSchema, getAllSchema, getOneSchema, updateSchema, deleteSchema, getAllOldValuesSchema, getOneOldValuesSchema } = require('../schemas/sensor');
+const { createSensor, findAllSensor, findOneSensor, updateSensor, deleteSensor, findAllOldValues, findOneOldValues } = require('../controllers/sensor');
 
 
 const router = [
@@ -45,10 +45,18 @@ const router = [
     },
     {
         method: "GET",
+        path: "/aquarium/{aquarium_id}/sensors/old_values",
+        options: {
+            handler: findAllOldValues,
+            validate: getAllOldValuesSchema
+        }
+    },
+    {
+        method: "GET",
         path: "/aquarium/{aquarium_id}/sensors/{id}/old_values",
         options: {
-            handler: findOldValues,
-            validate: getOldValuesSchema
+            handler: findOneOldValues,
+            validate: getOneOldValuesSchema
         }
     }
 ];

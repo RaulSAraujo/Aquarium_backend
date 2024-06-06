@@ -18,7 +18,6 @@ const findAll = async (aquariumId, query, logger) => {
                 id: true,
                 name: true,
                 current: true,
-                old_values: true,
                 created_at: true,
                 updated_at: true
             }
@@ -153,14 +152,13 @@ const destroy = async (aquariumId, id, logger) => {
 };
 
 /**
- * @description Busca os valores antigos do sensor.
+ * @description Busca todos os valores antigos de todos os sensores.
  * @param {string} aquariumId - Id do aquário.
- * @param {number} sensorId - Id do sensor.
  * @param {object} query - Parâmetros de busca.
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
  * @returns {object} Dados do sensor deletado.
  */
-const oldValues = async (aquariumId, sensorId, query, logger) => {
+const findAllOldValues = async (aquariumId, query, logger) => {
     try {
 
         let where = undefined
@@ -170,7 +168,50 @@ const oldValues = async (aquariumId, sensorId, query, logger) => {
                 name: query.name ? query.name : undefined,
                 created_at: {
                     gte: new Date(dates[0]).toISOString(), // Data inicial
-                    lte: new Date(dates[1]).toISOString(), // Data final
+                    lte: new Date(dates[1] + "T23:00:00").toISOString(), // Data final
+                }
+            }
+        }
+
+        const result = await prisma.oldValues.findMany({
+            where: {
+                aquariumId,
+                ...where
+            },
+            select: {
+                id: true,
+                name: true,
+                value: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
+
+        return result;
+    } catch (err) {
+        throw logger.error(err);
+    }
+}
+
+/**
+ * @description Busca os valores antigos de apenas um sensor.
+ * @param {string} aquariumId - Id do aquário.
+ * @param {number} sensorId - Id do sensor.
+ * @param {object} query - Parâmetros de busca.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do sensor deletado.
+ */
+const findOneOldValues = async (aquariumId, sensorId, query, logger) => {
+    try {
+
+        let where = undefined
+        if (query.created_at) {
+            const dates = query.created_at.split(',')
+            where = {
+                name: query.name ? query.name : undefined,
+                created_at: {
+                    gte: new Date(dates[0]).toISOString(), // Data inicial
+                    lte: new Date(dates[1] + "T23:00:00").toISOString(), // Data final
                 }
             }
         }
@@ -186,8 +227,7 @@ const oldValues = async (aquariumId, sensorId, query, logger) => {
                 name: true,
                 value: true,
                 created_at: true,
-                updated_at: true,
-                sensorId
+                updated_at: true
             }
         });
 
@@ -203,5 +243,6 @@ module.exports = {
     findOne,
     update,
     destroy,
-    oldValues
+    findAllOldValues,
+    findOneOldValues
 };

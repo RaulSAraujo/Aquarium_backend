@@ -29,7 +29,7 @@ const createSchema = {
             .required(), 
         voltage: Joi
             .string()
-            .valid('110V', '220V')
+            .valid('110', '220')
             .required()
     })
 };

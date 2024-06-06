@@ -99,12 +99,9 @@ const deleteSchema = {
     })
 };
 
-const getOldValuesSchema = {
+const getAllOldValuesSchema = {
     params: Joi.object({
         aquarium_id: Joi
-            .objectId()
-            .required(),
-        id: Joi
             .objectId()
             .required()
     }),
@@ -121,6 +118,22 @@ const getOldValuesSchema = {
             ),
         created_at: Joi
             .string()
+            .required()
+    })
+}
+
+const getOneOldValuesSchema = {
+    params: Joi.object({
+        aquarium_id: Joi
+            .objectId()
+            .required(),
+        id: Joi
+            .objectId()
+            .required()
+    }),
+    query: Joi.object({
+        created_at: Joi
+            .string()
     })
 }
 
@@ -130,5 +143,6 @@ module.exports = {
     getOneSchema,
     updateSchema,
     deleteSchema,
-    getOldValuesSchema
+    getAllOldValuesSchema,
+    getOneOldValuesSchema
 };
