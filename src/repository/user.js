@@ -32,7 +32,7 @@ const create = async (payload, logger) => {
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
  * @returns {object} Dados do usuario.
  */
- const findAll = async (id, logger) => {
+ const findAll = async (logger) => {
     try {
         const result = await prisma.user.findMany({
             select: {
@@ -40,7 +40,20 @@ const create = async (payload, logger) => {
                 username: true,
                 email: true,
                 created_at: true,
-                updated_at: true
+                updated_at: true,
+                aquariums: {
+                    select: {
+                        id: true,
+                        height: true,
+                        sensors: {
+                            select: {
+                                id: true,
+                                name: true,
+                                current: true,
+                            }
+                        }
+                    }
+                }
             }
         });
 

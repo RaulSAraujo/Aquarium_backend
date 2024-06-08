@@ -49,8 +49,20 @@ const validate = async (decoded, request, h) => {
 
   server.auth.default('jwt');
 
+  await server.register({
+    plugin: require('hapi-cron'),
+    options: {
+      jobs: [{
+        name: 'Virtual sensors',
+        time: '0 */30 * * * *',
+        timezone: 'America/Sao_Paulo',
+        function: () => {
+          virtualSensors.randomizer(server)
+        }
+      }]
+    }
+  });
+
   await server.start();
   server.logger.info(`Server listening: ${server.info.uri}`);
-
-  virtualSensors.randomizer()
 })();

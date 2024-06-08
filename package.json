@@ -17,6 +17,7 @@
     "@prisma/client": "^5.13.0",
     "bcrypt": "^5.1.1",
     "hapi-auth-jwt2": "^10.5.1",
+    "hapi-cron": "^1.1.0",
     "hapi-pino": "^12.1.0",
     "joi": "^17.13.0",
     "joi-objectid": "^4.0.2",

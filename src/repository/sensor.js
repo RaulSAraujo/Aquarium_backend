@@ -160,12 +160,11 @@ const destroy = async (aquariumId, id, logger) => {
  */
 const findAllOldValues = async (aquariumId, query, logger) => {
     try {
-
         let where = undefined
         if (query.created_at) {
             const dates = query.created_at.split(',')
             where = {
-                name: query.name ? query.name : undefined,
+                name: query.name,
                 created_at: {
                     gte: new Date(dates[0]).toISOString(), // Data inicial
                     lte: new Date(dates[1] + "T23:00:00").toISOString(), // Data final
