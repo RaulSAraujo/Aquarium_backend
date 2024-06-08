@@ -32,6 +32,30 @@ const create = async (payload, logger) => {
  * @param {object} logger - Parâmetros de log exe: info, warn, error.
  * @returns {object} Dados do usuario.
  */
+ const findAll = async (id, logger) => {
+    try {
+        const result = await prisma.user.findMany({
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
+
+        return result;
+    } catch (err) {
+        throw logger.error(err);
+    }
+};
+
+/**
+ * @description Busca apenas um usuario.
+ * @param {number} id - Id do usuario.
+ * @param {object} logger - Parâmetros de log exe: info, warn, error.
+ * @returns {object} Dados do usuario.
+ */
 const findOne = async (id, logger) => {
     try {
         const result = await prisma.user.findUnique({
@@ -140,6 +164,7 @@ const destroy = async (id, logger) => {
 
 module.exports = {
     create,
+    findAll,
     findOne,
     findByUsername,
     update,

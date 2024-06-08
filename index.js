@@ -1,5 +1,6 @@
 const server = require("./server");
-const User = require("./src/repository/user")
+const User = require("./src/repository/user");
+const virtualSensors = require('./src/helpers/virtual_sensors');
 
 const validate = async (decoded, request, h) => {
   let user = await User.findOne(decoded.id, request.logger);
@@ -50,4 +51,6 @@ const validate = async (decoded, request, h) => {
 
   await server.start();
   server.logger.info(`Server listening: ${server.info.uri}`);
+
+  virtualSensors.randomizer()
 })();
