@@ -15,7 +15,7 @@ const generateDataToSensors = () => {
   const virtualSensors = require('./src/helpers/virtual_sensors');
   const cron = require('node-cron');
 
-  cron.schedule('* */30 * * *', () => {
+  cron.schedule('*/30 * * * *', () => {
     virtualSensors.randomizer(server)
   });
 };
