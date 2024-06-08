@@ -35,7 +35,7 @@ const findAll = async (request, h) => {
         }
 
         if (item.name === initialName) {
-            const send = { ...body }
+            const send = { ...body, created_at: item.created_at }
             body = {
                 "nivel_agua": '',
                 "nivel_oxigenio": '',
