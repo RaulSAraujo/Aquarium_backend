@@ -1,4 +1,3 @@
-const { user, sensor } = require('../../prisma')
 const { findAll } = require('../repository/user')
 const { update } = require('../repository/sensor')
 

@@ -8,8 +8,8 @@ const router = [
     path: "/aquarium",
     options: {
       handler: findAllAquarium,
-      validate: getAllSchema
-    }
+      validate: getAllSchema,
+    },
   },
   {
     method: "POST",

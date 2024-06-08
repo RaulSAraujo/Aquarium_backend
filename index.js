@@ -1,6 +1,5 @@
 const server = require("./server");
 const User = require("./src/repository/user");
-const virtualSensors = require('./src/helpers/virtual_sensors');
 
 const validate = async (decoded, request, h) => {
   let user = await User.findOne(decoded.id, request.logger);
@@ -10,6 +9,15 @@ const validate = async (decoded, request, h) => {
   } else {
     return { isValid: false };
   }
+};
+
+const generateDataToSensors = () => {
+  const virtualSensors = require('./src/helpers/virtual_sensors');
+  const cron = require('node-cron');
+
+  cron.schedule('* */30 * * *', () => {
+    virtualSensors.randomizer(server)
+  });
 };
 
 (async () => {
@@ -49,20 +57,8 @@ const validate = async (decoded, request, h) => {
 
   server.auth.default('jwt');
 
-  await server.register({
-    plugin: require('hapi-cron'),
-    options: {
-      jobs: [{
-        name: 'Virtual sensors',
-        time: '0 */30 * * * *',
-        timezone: 'America/Sao_Paulo',
-        function: () => {
-          virtualSensors.randomizer(server)
-        }
-      }]
-    }
-  });
-
   await server.start();
   server.logger.info(`Server listening: ${server.info.uri}`);
+
+  generateDataToSensors();
 })();
