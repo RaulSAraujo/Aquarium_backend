@@ -1,4 +1,5 @@
 const business = require('../business/chart')
+const moment = require('moment-timezone');
 
 /**
  * @description Busca dados para montar os graficos.
@@ -35,8 +36,7 @@ const findAll = async (request, h) => {
         }
 
         if (item.name === initialName) {
-            const data = new Date(item.created_at);
-            const send = { ...body, created_at: format(data) }
+            const send = { ...body, created_at: moment(item.created_at).tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss') }
             body = {
                 "nivel_agua": '',
                 "nivel_oxigenio": '',
@@ -55,18 +55,6 @@ const findAll = async (request, h) => {
     }).filter((item) => item !== undefined)
 
     return h.response(chart).code(code);
-}
-
-// Função para formatar a data no formato brasileiro
-const format = (data) => {
-    const day = data.getDate().toString().padStart(2, '0');
-    const mounth = (data.getMonth() + 1).toString().padStart(2, '0');
-    const year = data.getFullYear();
-    const hours = data.getHours().toString().padStart(2, '0');
-    const minutes = data.getMinutes().toString().padStart(2, '0');
-    const seconds = data.getSeconds().toString().padStart(2, '0');
-
-    return `${day}/${mounth}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 module.exports = {
