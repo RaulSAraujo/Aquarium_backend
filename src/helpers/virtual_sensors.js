@@ -42,6 +42,7 @@ async function randomizer(server) {
 
                     const map = {
                         'Nível oxigênio': aqua_ox,
+                        'Saturação': aqua_ox,
                         'pH': ph,
                         'Luminosidade': light,
                         'Temperatura': aqua_temp

@@ -17,6 +17,7 @@ const findAll = async (request, h) => {
     const map = {
         'Nível de água': 'nivel_agua',
         'Nível oxigênio': 'nivel_oxigenio',
+        'Saturação': 'saturacao',
         'pH': 'ph',
         'Luminosidade': 'luminosidade',
         'Temperatura': 'temperatura'
@@ -26,6 +27,7 @@ const findAll = async (request, h) => {
     let body = {
         "nivel_agua": '',
         "nivel_oxigenio": '',
+        "saturacao": '',
         'ph': '',
         'luminosidade': '',
         'temperatura': ''
@@ -40,6 +42,7 @@ const findAll = async (request, h) => {
             body = {
                 "nivel_agua": '',
                 "nivel_oxigenio": '',
+                "saturacao": '',
                 'ph': '',
                 'luminosidade': '',
                 'temperatura': ''
